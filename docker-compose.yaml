@@ -1,0 +1,82 @@
+services:
+  # Portainer is used to manage my docker instances
+  # This instance is exposed on https://portainer.homeserver.lukan.rocks with NGINX
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce
+    restart: unless-stopped
+    ports:
+      - '9000:9000/tcp'
+    environment:
+      TZ: BR=America/Sao_Paulo
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/lukanvanderlinde/services/data/portainer:/data
+  # NGINX Proxy Manager is used to manage to reverse proxy my https://*.homeserver.lukan.rocks to my containers running here.
+  # This instance is exposed on https://nginx.homeserver.lukan.rocks
+  nginxproxymanager:
+    container_name: nginx-proxy-manager
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    environment:
+      TZ: BR=America/Sao_Paulo
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '9001:81' # Admin Web Port
+    volumes:
+      - /home/lukanvanderlinde/services/data/nginx:/data
+      - /home/lukanvanderlinde/services/data/letsencrypt:/etc/letsencrypt
+  # Starbase is used to display a dashboard with all my services
+  # This instance is exposed on https://homeserver.lukan.rocks with NGINX
+  # icons: https://github.com/walkxcode/dashboard-icons/blob/main/ICONS.md
+  starbase:
+    container_name: starbase
+    image: jordanroher/starbase-80
+    restart: unless-stopped
+    ports:
+      - 9002:4173
+    environment:
+      - TITLE=Home Server
+      - HEADER=false
+      - HEADRLINE=false
+      # - CATEGORIES=small
+      - BGCOLOR=theme(colors.slate.50)
+      - BGCOLORDARK=theme(colors.zinc.900)
+    volumes:
+        - /home/lukanvanderlinde/services/data/starbase/configuration.json:/app/src/config/config.json
+        # - /home/lukanvanderlinde/services/data/starbase/public/favicon.ico:/app/public/favicon.ico
+  # Home Assistant is used to manage all things IoT and home automation
+  # This instance is exposed on https://nginx.homeserver.lukan.rocks with NGINX
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    ports:
+      - '9003:8123' # Defining the port instead of using network_mode: host to allow NGINX reverse proxy
+    environment:
+      TZ: BR=America/Sao_Paulo
+    volumes:
+      - /home/lukanvanderlinde/services/data/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+  uptimekuma:
+    container_name: uptimekuma
+    image: louislam/uptime-kuma:latest
+    restart: unless-stopped
+    ports:
+      - 9004:3001
+    environment:
+      TZ: BR=America/Sao_Paulo
+    volumes:
+      - /home/lukanvanderlinde/services/data/uptimekuma:/app/data
+  homebox:
+    container_name: homebox
+    image: ghcr.io/sysadminsmedia/homebox:latest
+    restart: unless-stopped
+    ports:
+      - 9005:7745
+    environment:
+    - HBOX_OPTIONS_ALLOW_REGISTRATION=false
+    volumes:
+      - /home/lukanvanderlinde/services/data/homebox:/data
