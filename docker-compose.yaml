@@ -1,4 +1,5 @@
 services:
+  
   # Portainer is used to manage my docker instances
   # This instance is exposed on https://portainer.homeserver.lukan.rocks with NGINX
   portainer:
@@ -12,6 +13,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/lukanvanderlinde/services/data/portainer:/data
+  
   # NGINX Proxy Manager is used to manage to reverse proxy my https://*.homeserver.lukan.rocks to my containers running here.
   # This instance is exposed on https://nginx.homeserver.lukan.rocks
   nginxproxymanager:
@@ -27,6 +29,7 @@ services:
     volumes:
       - /home/lukanvanderlinde/services/data/nginx:/data
       - /home/lukanvanderlinde/services/data/letsencrypt:/etc/letsencrypt
+  
   # Starbase is used to display a dashboard with all my services
   # This instance is exposed on https://homeserver.lukan.rocks with NGINX
   # icons: https://github.com/walkxcode/dashboard-icons/blob/main/ICONS.md
@@ -40,12 +43,12 @@ services:
       - TITLE=Home Server
       - HEADER=false
       - HEADRLINE=false
-      # - CATEGORIES=small
       - BGCOLOR=theme(colors.slate.50)
       - BGCOLORDARK=theme(colors.zinc.900)
     volumes:
         - /home/lukanvanderlinde/services/data/starbase/configuration.json:/app/src/config/config.json
         # - /home/lukanvanderlinde/services/data/starbase/public/favicon.ico:/app/public/favicon.ico
+  
   # Home Assistant is used to manage all things IoT and home automation
   # This instance is exposed on https://nginx.homeserver.lukan.rocks with NGINX
   homeassistant:
@@ -60,6 +63,7 @@ services:
       - /home/lukanvanderlinde/services/data/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+  
   uptimekuma:
     container_name: uptimekuma
     image: louislam/uptime-kuma:latest
@@ -70,6 +74,7 @@ services:
       TZ: BR=America/Sao_Paulo
     volumes:
       - /home/lukanvanderlinde/services/data/uptimekuma:/app/data
+  
   homebox:
     container_name: homebox
     image: ghcr.io/sysadminsmedia/homebox:latest
@@ -80,3 +85,12 @@ services:
     - HBOX_OPTIONS_ALLOW_REGISTRATION=false
     volumes:
       - /home/lukanvanderlinde/services/data/homebox:/data
+  
+  duplicati:
+    container_name: duplicati
+    image: duplicati/duplicati:canary
+    restart: unless-stopped
+    ports:
+      - 9006:8200
+    volumes:
+      - /home/lukanvanderlinde/services/data/duplicati:/data
