@@ -7,7 +7,7 @@ After installing ubuntu and Docker, I created a folder called 'services' where I
 
 Because most of the time I'm accessing this folder through SSH using VSCode I ran this command to allow me to use VS code write/read files when remoting access though the file browser.
 
-sudo chown -R $USER /home/lukanvanderlinde/services/docker-compose.yaml
+sudo chown -R $USER /home/lukanvanderlinde/services
 
 ### Setting up a new service
 Everything stars by adding the service to my docker-compose file
