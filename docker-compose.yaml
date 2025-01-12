@@ -1,4 +1,20 @@
 services:
+
+  # NGINX Proxy Manager is used to manage to reverse proxy my https://*.homeserver.lukan.rocks to my containers running here.
+  # This instance is exposed on https://nginx.homeserver.lukan.rocks
+  nginx:
+    container_name: nginx-proxy-manager
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    volumes:
+      - /home/lukanvanderlinde/services/data/nginx:/data
+      - /home/lukanvanderlinde/services/data/letsencrypt:/etc/letsencrypt
+    ports:
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '8999:81' # Admin Web Port
+    environment:
+      TZ: BR=America/Sao_Paulo
   
   # Portainer is used to manage my docker instances
   # This instance is exposed on https://portainer.homeserver.lukan.rocks with NGINX
@@ -6,51 +22,44 @@ services:
     container_name: portainer
     image: portainer/portainer-ce
     restart: unless-stopped
+    depends_on:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/lukanvanderlinde/services/data/portainer:/data
     ports:
       - '9000:9000/tcp'
     environment:
       TZ: BR=America/Sao_Paulo
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/lukanvanderlinde/services/data/portainer:/data
   
   # Mosquitto is used as my local MQTT broker
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto:latest
     restart: unless-stopped
+    depends_on:
+      - nginx
     volumes:
       - /home/lukanvanderlinde/services/data/mosquitto:/mosquitto
     ports:
       - 1883:1883
       - 9001:9001
+    environment:
+      TZ: BR=America/Sao_Paulo
   
   #
   zigbee2mqtt:
     container_name: zigbee2mqtt
     image: koenkk/zigbee2mqtt:latest
     restart: unless-stopped
+    depends_on:
+      - nginx
+      - mosquitto
     volumes:
         - /home/lukanvanderlinde/services/data/zigbee2mqtt:/app/data
         - /run/udev:/run/udev:ro
     ports:
         - 8080:8080
-    environment:
-      TZ: BR=America/Sao_Paulo
-
-  # NGINX Proxy Manager is used to manage to reverse proxy my https://*.homeserver.lukan.rocks to my containers running here.
-  # This instance is exposed on https://nginx.homeserver.lukan.rocks
-  nginxproxymanager:
-    container_name: nginx-proxy-manager
-    image: jc21/nginx-proxy-manager:latest
-    restart: unless-stopped
-    ports:
-      - '80:80' # Public HTTP Port
-      - '443:443' # Public HTTPS Port
-      - '9002:81' # Admin Web Port
-    volumes:
-      - /home/lukanvanderlinde/services/data/nginx:/data
-      - /home/lukanvanderlinde/services/data/letsencrypt:/etc/letsencrypt
     environment:
       TZ: BR=America/Sao_Paulo
   
@@ -60,12 +69,15 @@ services:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
     restart: unless-stopped
-    ports:
-      - '9003:8123' # Defining the port instead of using network_mode: host to allow NGINX reverse proxy
+    depends_on:
+      - nginx
+      - zigbee2mqtt
     volumes:
       - /home/lukanvanderlinde/services/data/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
+    ports:
+      - '9003:8123'
     environment:
       TZ: BR=America/Sao_Paulo
   
@@ -74,10 +86,12 @@ services:
     container_name: homebox
     image: ghcr.io/sysadminsmedia/homebox:latest
     restart: unless-stopped
-    ports:
-      - 9004:7745
+    depends_on:
+      - nginx
     volumes:
       - /home/lukanvanderlinde/services/data/homebox:/data
+    ports:
+      - 9004:7745
     environment:
       - HBOX_OPTIONS_ALLOW_REGISTRATION=false
   
@@ -86,13 +100,15 @@ services:
     container_name: homarr
     image: ghcr.io/ajnart/homarr:latest
     restart: unless-stopped
-    ports:
-      - '9005:7575'
+    depends_on:
+      - nginx
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/lukanvanderlinde/services/data/homarr/configs:/app/data/configs
       - /home/lukanvanderlinde/services/data/homarr/icons:/app/public/icons
       - /home/lukanvanderlinde/services/data/homarr/data:/data
+    ports:
+      - '9005:7575'
     environment:
       TZ: BR=America/Sao_Paulo
 
@@ -101,9 +117,11 @@ services:
     container_name: uptimekuma
     image: louislam/uptime-kuma:latest
     restart: unless-stopped
-    ports:
-      - 9006:3001
+    depends_on:
+      - nginx
     volumes:
       - /home/lukanvanderlinde/services/data/uptimekuma:/app/data  
+    ports:
+      - 9006:3001
     environment:
       TZ: BR=America/Sao_Paulo
