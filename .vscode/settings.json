@@ -1,0 +1,13 @@
+{
+    "material-icon-theme.folders.associations": {
+        "duplicati": "Coverage",
+        "homeassistant": "Coverage",
+        "hoarder": "Coverage",
+        "homarr": "Coverage",
+        "homebox": "Coverage",
+        "mosquitto": "Coverage",
+        "traefik": "Coverage",
+        "uptimekuma": "Coverage",
+        "zigbee2mqtt": "Coverage",
+    }
+}
