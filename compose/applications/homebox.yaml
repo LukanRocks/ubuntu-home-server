@@ -6,13 +6,14 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    env_file:
+      - $DOCKER_CONFIG_DIR/homebox/config.env
     volumes:
       # Persistant data.
       # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/homebox:/data:rw
     environment:
       - TZ=$TZ
-      - HBOX_OPTIONS_ALLOW_REGISTRATION=false
     depends_on:
       - traefik
     networks:

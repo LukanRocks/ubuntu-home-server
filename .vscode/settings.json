@@ -1,14 +1,14 @@
 {
     "material-icon-theme.folders.associations": {
         "compose": "Docker",
-        "duplicati": "Coverage",
-        "homeassistant": "Coverage",
-        "hoarder": "Coverage",
-        "homarr": "Coverage",
-        "homebox": "Coverage",
-        "mosquitto": "Coverage",
-        "traefik": "Coverage",
-        "uptimekuma": "Coverage",
-        "zigbee2mqtt": "Coverage",
+        "data/duplicati": "Coverage",
+        "data/homeassistant": "Coverage",
+        "data/hoarder": "Coverage",
+        "data/homarr": "Coverage",
+        "data/homebox": "Coverage",
+        "data/mosquitto": "Coverage",
+        "data/traefik": "Coverage",
+        "data/uptimekuma": "Coverage",
+        "data/zigbee2mqtt": "Coverage",
     }
 }
