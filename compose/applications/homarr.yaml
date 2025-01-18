@@ -1,0 +1,34 @@
+# Homarr is my main dashboard that aggregates all services and devices.
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      # Docker Network access.
+      # * :rw - Read Only.
+      - $DOCKER_SOCK_DIR:rw
+
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/homarr/configs:/app/data/configs:rw
+      - $DOCKER_DATA_DIR/homarr/icons:/app/public/icons:rw
+      - $DOCKER_DATA_DIR/homarr/data:/data:rw
+    environment:
+      - TZ=$TZ
+    depends_on:
+      - traefik
+    networks:
+      - traefik-proxy
+    labels:
+      # Allows this conteiner to be exposed by traefik.
+      - traefik.enable=true
+      
+      # Defines the DNS for the service.
+      - traefik.http.routers.homarr-router.rule=Host(`homeserver.lukan.rocks`)
+      
+      # (Optional) Defines the allowed entrypoints for this application.
+      # If not present it will use all the available ones.
+      - traefik.http.routers.homarr-router.entrypoints=web,websecure

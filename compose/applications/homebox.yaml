@@ -1,0 +1,29 @@
+# Homebox allows to keep track of all my stuff.
+services:
+  homebox:
+    container_name: homebox
+    image: ghcr.io/sysadminsmedia/homebox:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/homebox:/data:rw
+    environment:
+      - TZ=$TZ
+      - HBOX_OPTIONS_ALLOW_REGISTRATION=false
+    depends_on:
+      - traefik
+    networks:
+      - traefik-proxy
+    labels:
+      # Allows this conteiner to be exposed by traefik.
+      - traefik.enable=true
+      
+      # Defines the DNS for the service.
+      - traefik.http.routers.homebox-router.rule=Host(`homebox.homeserver.lukan.rocks`)
+      
+      # (Optional) Defines the allowed entrypoints for this application.
+      # If not present it will use all the available ones.
+      - traefik.http.routers.homebox-router.entrypoints=web,websecure

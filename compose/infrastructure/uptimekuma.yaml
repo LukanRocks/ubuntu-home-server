@@ -1,0 +1,28 @@
+# UptimeKuma allows me to easily check the status of my services.
+services:
+  uptimekuma:
+    container_name: uptimekuma
+    image: louislam/uptime-kuma:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
+    environment:
+      - TZ=$TZ
+    depends_on:
+      - traefik
+    networks:
+      - traefik-proxy
+    labels:
+      # Allows this conteiner to be exposed by traefik.
+      - traefik.enable=true
+      
+      # Defines the DNS for the service.
+      - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)
+      
+      # (Optional) Defines the allowed entrypoints for this application.
+      # If not present it will use all the available ones.
+      - traefik.http.routers.uptimekuma-router.entrypoints=web,websecure

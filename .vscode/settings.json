@@ -1,5 +1,6 @@
 {
     "material-icon-theme.folders.associations": {
+        "compose": "Docker",
         "duplicati": "Coverage",
         "homeassistant": "Coverage",
         "hoarder": "Coverage",
