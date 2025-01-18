@@ -16,7 +16,7 @@ Then, whenever I need to create a secret, I use:
 
 sudo su
 ls ./secrets
-nano FILENAME
+nano ./secrets/SECRET-NAME
 
 ### Backups
 I have Duplicati running and backing up though FTP to my local TrueNas Scale.

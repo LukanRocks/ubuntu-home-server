@@ -1,0 +1,81 @@
+
+# Hoarder is a bookmark links service
+secrets:
+  hoarder_nextauth:
+    file: $DOCKER_SECRETS_DIR/hoarder_nextauth
+  meili_master_key:
+    file: $DOCKER_SECRETS_DIR/meili_master_key
+
+services:
+  hoarder:
+    container_name: hoarder
+    image: ghcr.io/hoarder-app/hoarder:release
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/hoarder:/data
+    environment:
+      TZ: $TZ
+      DATA_DIR: /data
+      DISABLE_SIGNUPS: true
+      NEXTAUTH_SECRET: /run/secrets/hoarder_nextauth
+      NEXTAUTH_URL: http://hoarder.homeserver.lukan.rocks
+      # NEXTAUTH_URL: https://hoarder.homeserver.lukan.rocks
+      MEILI_ADDR: http://meilisearch:7700
+      MEILI_MASTER_KEY: /run/secrets/meili_master_key
+      BROWSER_WEB_URL: http://chrome:9222
+      # OPENAI_API_KEY:  look ollama implementation
+    depends_on:
+      - traefik
+      - chrome
+      - meilisearch
+    networks:
+      - traefik-proxy
+    labels:
+      # Allows this conteiner to be exposed by traefik.
+      - traefik.enable=true
+      
+      # Defines the DNS for the service.
+      - traefik.http.routers.hoarder-router.rule=Host(`hoarder.homeserver.lukan.rocks`)
+      
+      # (Optional) Defines the allowed entrypoints for this application.
+      # If not present it will use all the available ones.
+      - traefik.http.routers.hoarder-router.entrypoints=web,websecure
+      
+      # Explicity defines the service to avoid issues.
+      - traefik.http.routers.hoarder-router.service=hoarder-service
+      
+      # Because traefik automatically resolves the first container port,
+      # I need to overide this behaviour to avoid looping through port 80.
+      - traefik.http.services.hoarder-service.loadbalancer.server.port=3000
+  
+  chrome:
+    container_name: chrome
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - traefik
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+
+  meilisearch:
+    container_name: meilisearch
+    image: getmeili/meilisearch:v1.11.1
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - traefik
+    volumes:
+      - $DOCKER_DATA_DIR/meilisearch:/meili_data
+    environment:
+      MEILI_NO_ANALYTICS: true
+      MEILI_MASTER_KEY: /run/secrets/meili_master_key
