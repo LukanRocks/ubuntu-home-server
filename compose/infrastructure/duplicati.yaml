@@ -1,0 +1,40 @@
+# Duplicati allows me to easily backup my containers persistant data on my NAS.
+secrets:
+  duplicati_secrets:
+    file: $DOCKER_SECRETS_DIR/duplicati_secrets.json
+
+services:
+  duplicati:
+    container_name: duplicati
+    image: lscr.io/linuxserver/duplicati:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/duplicati:/config:rw
+
+      # Containers persistant data.
+      # * :rw - Read Only.
+      - $DOCKER_DATA_DIR:/source:ro
+    secrets:
+      - duplicati_secrets
+    environment:
+      TZ: $TZ
+      PUID: 0
+      PGID: 0
+      DUPLICATI__SECRET_PROVIDER: file-secret:///run/secrets/duplicati_secrets
+      SETTINGS_ENCRYPTION_KEY: "$$SETTINGS_ENCRYPTION_KEY-KEY"
+      DUPLICATI__WEBSERVICE_PASSWORD: "$$DUPLICATI__WEBSERVICE_PASSWORD"
+      # - CLI_ARGS= #optional
+    depends_on:
+      - traefik
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.duplicati-router.rule=Host(`duplicati.homeserver.lukan.rocks`)
+      - traefik.http.routers.duplicati-router.entrypoints=web,websecure
+      - traefik.http.routers.duplicati-router.tls=true
+      - traefik.http.routers.duplicati-router.tls.certresolver=letsencrypt
