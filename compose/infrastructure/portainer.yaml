@@ -24,16 +24,23 @@ services:
       # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
       
-      # Defines the DNS for the service.
-      - traefik.http.routers.portainer-router.rule=Host(`portainer.homeserver.lukan.rocks`)
+      # Defines the DNS for web route.
+      - traefik.http.routers.portainer-web-router.rule=Host(`portainer.homeserver.lukan.rocks`)
       
-      # (Optional) Defines the allowed entrypoints for this application.
-      # If not present it will use all the available ones.
-      - traefik.http.routers.portainer-router.entrypoints=web,websecure
+      # Defines the allowed entrypoints for this application.
+      - traefik.http.routers.portainer-web-router.entrypoints=web
+      
+      # Defines the DNS for websecure route.
+      - traefik.http.routers.portainer-websecure-router.rule=Host(`portainer.homeserver.lukan.rocks`)
+      
+      # Defines the allowed entrypoints for this application.
+      - traefik.http.routers.portainer-websecure-router.entrypoints=websecure
+      - traefik.http.routers.portainer-websecure-router.tls=true
+      - traefik.http.routers.portainer-websecure-router.tls.certresolver=cloudflare
       
       # Explicity defines the service to avoid issues.
-      - traefik.http.routers.portainer-router.service=portainer-service
+      - traefik.http.routers.portainer-websecure-router.service=portainer-websecure-service
       
-      # Because traefik automatically resolves the first container port,
-      # I need to overide this behaviour to avoid exposing 9433 automatically.
-      - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+      # Because traefik automatically resolves the first container port, I need to define the right one.
+      - traefik.http.services.portainer-websecure-service.loadbalancer.server.port=9000
+
