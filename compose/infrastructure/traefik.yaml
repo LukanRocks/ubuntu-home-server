@@ -2,6 +2,8 @@
 secrets:
   lets_encrypt_cloudflare_acme:
     file: $DOCKER_SECRETS_DIR/lets_encrypt_cloudflare_acme
+  cloudflare_email:
+    file: $DOCKER_SECRETS_DIR/cloudflare_email
 
 services:
   traefik:
@@ -11,7 +13,11 @@ services:
     security_opt:
       - no-new-privileges:true
     environment:
-      CF_DNS_API_TOKEN: /run/secrets/lets_encrypt_cloudflare_acme
+      CLOUDFLARE_DNS_API_TOKEN_FILE: /run/secrets/lets_encrypt_cloudflare_acme
+      CLOUDFLARE_EMAIL_FILE: /run/secrets/cloudflare_email
+    secrets:
+      - lets_encrypt_cloudflare_acme
+      - cloudflare_email
     volumes:
       # Docker Network access.
       # * :ro - Read Only.

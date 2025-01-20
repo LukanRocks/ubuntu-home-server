@@ -1,0 +1,46 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# (Optional) Log level: [TRACE, DEBUG, INFO, WARN, ERROR, FATAL]
+log:
+ level: ERROR
+
+# (Optional) Enable API and Dashboard here. Don't do in production.
+api: {}
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+  # mqtt:
+  #   address: :1833
+  # mqttsecure:
+  #   address: :8883
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      storage: /letsencrypt/credentials.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
+
+providers:
+  docker:
+    # (Optional) Change this to true if you want to expose all services
+    exposedByDefault: false
+  
+  # watch for dynamic configuration changes
+  file:
+    directory: /etc/traefik
+    watch: true
