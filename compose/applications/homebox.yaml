@@ -6,12 +6,14 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    env_file:
-      - $DOCKER_CONFIG_DIR/homebox/config.env
     volumes:
       - $DOCKER_DATA_DIR/homebox:/data:rw
     environment:
       - TZ=$TZ
+      - HBOX_MODE="production"
+      - HBOX_OPTIONS_ALLOW_REGISTRATION=false
+      - HBOX_OPTIONS_AUTO_INCREMENT_ASSET_ID=true
+      - HBOX_LOG_LEVEL="warn" # trace, debug, info, warn, error, critical
     depends_on:
       - traefik
     networks:
