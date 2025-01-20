@@ -17,13 +17,8 @@ services:
     networks:
       - traefik-proxy
     labels:
-      # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
-      
-      # Defines the DNS route.
       - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)
-      
-      # Defines the allowed entrypoints for this application.
       - traefik.http.routers.uptimekuma-router.entrypoints=web,websecure
       - traefik.http.routers.uptimekuma-router.tls=true
       - traefik.http.routers.uptimekuma-router.tls.certresolver=letsencrypt

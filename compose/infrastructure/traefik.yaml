@@ -33,13 +33,8 @@ services:
     networks:
       - traefik-proxy
     labels:
-      # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
-      
-      # Defines the DNS route.
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)
-      
-      # Defines the allowed entrypoints for this application.
       - traefik.http.routers.traefik-router.entrypoints=web,websecure
       - traefik.http.routers.traefik-router.tls=true
       - traefik.http.routers.traefik-router.tls.certresolver=letsencrypt

@@ -21,20 +21,11 @@ services:
     networks:
       - traefik-proxy
     labels:
-      # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
-      
-      # Defines the DNS route.
       - traefik.http.routers.portainer-router.rule=Host(`portainer.homeserver.lukan.rocks`)
-      
-      # Defines the allowed entrypoints for this application.
       - traefik.http.routers.portainer-router.entrypoints=web,websecure
       - traefik.http.routers.portainer-router.tls=true
       - traefik.http.routers.portainer-router.tls.certresolver=letsencrypt
-      
-      # Explicity defines the service to avoid issues.
       - traefik.http.routers.portainer-router.service=portainer-service
-      
-      # Because traefik automatically resolves the first container port, I need to define the right one.
       - traefik.http.services.portainer-service.loadbalancer.server.port=9000
 
