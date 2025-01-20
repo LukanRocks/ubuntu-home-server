@@ -23,12 +23,8 @@ services:
     networks:
       - traefik-proxy
     labels:
-      # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
-      
-      # Defines the DNS for the service.
       - traefik.http.routers.homarr-router.rule=Host(`homeserver.lukan.rocks`)
-      
-      # (Optional) Defines the allowed entrypoints for this application.
-      # If not present it will use all the available ones.
       - traefik.http.routers.homarr-router.entrypoints=web,websecure
+      - traefik.http.routers.homarr-router.tls=true
+      - traefik.http.routers.homarr-router.tls.certresolver=letsencrypt

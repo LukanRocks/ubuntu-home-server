@@ -33,21 +33,12 @@ services:
     networks:
       - traefik-proxy
     labels:
-      # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
-      
-      # Defines the DNS for the service.
       - traefik.http.routers.hoarder-router.rule=Host(`hoarder.homeserver.lukan.rocks`)
-      
-      # (Optional) Defines the allowed entrypoints for this application.
-      # If not present it will use all the available ones.
       - traefik.http.routers.hoarder-router.entrypoints=web,websecure
-      
-      # Explicity defines the service to avoid issues.
+      - traefik.http.routers.hoarder-router.tls=true
+      - traefik.http.routers.hoarder-router.tls.certresolver=letsencrypt
       - traefik.http.routers.hoarder-router.service=hoarder-service
-      
-      # Because traefik automatically resolves the first container port,
-      # I need to overide this behaviour to avoid looping through port 80.
       - traefik.http.services.hoarder-service.loadbalancer.server.port=3000
   
   chrome:
