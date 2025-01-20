@@ -20,9 +20,10 @@ services:
       # Allows this conteiner to be exposed by traefik.
       - traefik.enable=true
       
-      # Defines the DNS for the service.
+      # Defines the DNS route.
       - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)
       
-      # (Optional) Defines the allowed entrypoints for this application.
-      # If not present it will use all the available ones.
+      # Defines the allowed entrypoints for this application.
       - traefik.http.routers.uptimekuma-router.entrypoints=web,websecure
+      - traefik.http.routers.uptimekuma-router.tls=true
+      - traefik.http.routers.uptimekuma-router.tls.certresolver=letsencrypt

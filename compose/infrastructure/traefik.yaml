@@ -1,0 +1,46 @@
+# Traefik handles the reverse proxy and certificates validation.
+secrets:
+  lets_encrypt_cloudflare_acme:
+    file: $DOCKER_SECRETS_DIR/lets_encrypt_cloudflare_acme
+
+services:
+  traefik:
+    container_name: traefik
+    image: docker.io/library/traefik:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      CF_DNS_API_TOKEN: /run/secrets/lets_encrypt_cloudflare_acme
+    volumes:
+      # Docker Network access.
+      # * :ro - Read Only.
+      - $DOCKER_SOCK_DIR:ro
+      
+      # Configuration file path.
+      # * :ro - Read Only.
+      - $DOCKER_CONFIG_DIR/traefik/config.yaml:/etc/traefik/traefik.yaml:ro
+      
+      # LetsEncrypt persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/letsencrypt:/letsencrypt:rw
+    ports:
+      # Default HTTP unsecured port.
+      - 80:80
+      
+      # Default HTTPS secured port.
+      - 443:443
+    networks:
+      - traefik-proxy
+    labels:
+      # Allows this conteiner to be exposed by traefik.
+      - traefik.enable=true
+      
+      # Defines the DNS route.
+      - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)
+      
+      # Defines the allowed entrypoints for this application.
+      - traefik.http.routers.traefik-router.entrypoints=web,websecure
+      - traefik.http.routers.traefik-router.tls=true
+      - traefik.http.routers.traefik-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.traefik-router.service=api@internal
