@@ -1,0 +1,23 @@
+# # Zigbee2MQTT manages all my zigbee devices.
+# services:
+#   zigbee2mqtt:
+#     container_name: zigbee2mqtt
+#     image: koenkk/zigbee2mqtt:latest
+#     restart: unless-stopped
+#     security_opt:
+#       - no-new-privileges:true
+#     volumes:
+#       # Persistant data.
+#       # * :rw - Read and Write.
+#       - $DOCKER_DATA_DIR/zigbee2mqtt:/app/data:rw
+
+#       # ! Learn More
+#       # * :rw - Read Only.
+#       - /run/udev:/run/udev:ro
+#     environment:
+#       - TZ=$TZ
+#     depends_on:
+#       - traefik
+#       # - mosquitto
+#     ports:
+#         - 8080:8080

@@ -1,0 +1,16 @@
+  
+  # # 9002
+  # excalidraw:
+  #   container_name: excalidraw
+  #   image: excalidraw/excalidraw:latest
+  #   ports:
+  #     - "3030:80"
+  #   restart: unless-stopped
+  #   security_opt:
+  #     - no-new-privileges:true
+  #   depends_on:
+  #     - traefik
+  #   healthcheck:
+  #     disable: true
+  #   environment:
+  #     - NODE_ENV=production

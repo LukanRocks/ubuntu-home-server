@@ -1,0 +1,14 @@
+# Mosquitto is used as my local MQTT broker
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    depends_on:
+      - traefik
+    volumes:
+      - $DOCKER_DATA_DIR/mosquitto:/mosquitto
+    environment:
+      - TZ=$TZ

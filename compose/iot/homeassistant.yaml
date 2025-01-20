@@ -1,0 +1,36 @@
+# ! https://community.home-assistant.io/t/example-config-docker-with-home-assitant-mosquitto-zigbee2mqtt-and-traefik/632306
+# Home Assistant allows me to manage all things IoT and home automation.
+# name: home_assistant
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/homeassistant:/config:rw
+
+      # ! Learn More
+      # * :rw - Read Only.
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    environment:
+      - TZ=$TZ
+    depends_on:
+      - traefik
+      # - mosquitto
+      # - zigbee2mqtt
+    network_mode: host
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homeassistant-router.rule=Host(`ha.homeserver.lukan.rocks`)
+      - traefik.http.routers.homeassistant-router.entrypoints=web,websecure
+      - traefik.http.routers.homeassistant-router.tls=true
+      - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.homeassistant-router.service=homeassistant-service
+      - traefik.http.services.homeassistant-service.loadbalancer.server.port=8123
+    privileged: true
