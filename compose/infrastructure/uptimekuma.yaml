@@ -12,8 +12,6 @@ services:
       - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
     environment:
       - TZ=$TZ
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     labels:

@@ -16,8 +16,6 @@ services:
       - $DOCKER_DATA_DIR/portainer:/data:rw
     environment:
       - TZ=$TZ
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     labels:
@@ -26,6 +24,6 @@ services:
       - traefik.http.routers.portainer-router.entrypoints=web,websecure
       - traefik.http.routers.portainer-router.tls=true
       - traefik.http.routers.portainer-router.tls.certresolver=letsencrypt
-      - traefik.http.routers.portainer-router.service=portainer-service
-      - traefik.http.services.portainer-service.loadbalancer.server.port=9000
+      - traefik.http.routers.portainer-router.service=portainer-services
+      - traefik.http.services.portainer-services.loadbalancer.server.port=9000
 

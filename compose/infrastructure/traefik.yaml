@@ -38,6 +38,8 @@ services:
       - 443:443
     networks:
       - traefik-proxy
+    extra_hosts: 
+      - host.docker.internal:host-gateway
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)

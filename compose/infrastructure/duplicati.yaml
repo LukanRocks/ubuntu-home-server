@@ -28,8 +28,6 @@ services:
       SETTINGS_ENCRYPTION_KEY: "$$SETTINGS_ENCRYPTION_KEY-KEY"
       DUPLICATI__WEBSERVICE_PASSWORD: "$$DUPLICATI__WEBSERVICE_PASSWORD"
       # - CLI_ARGS= #optional
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     labels:

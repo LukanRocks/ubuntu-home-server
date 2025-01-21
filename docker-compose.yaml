@@ -2,7 +2,11 @@
 # * sudo docker network create traefik-proxy
 networks:
   traefik-proxy:
-    external: true
+    name: traefik-proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
 
 # Include the individual docker compose files for each service
 # TODO: Create a script that auto generates the include paths

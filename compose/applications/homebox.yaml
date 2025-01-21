@@ -14,8 +14,6 @@ services:
       - HBOX_OPTIONS_ALLOW_REGISTRATION=false
       - HBOX_OPTIONS_AUTO_INCREMENT_ASSET_ID=true
       - HBOX_LOG_LEVEL="warn" # trace, debug, info, warn, error, critical
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     labels:

@@ -8,8 +8,6 @@
   #   restart: unless-stopped
   #   security_opt:
   #     - no-new-privileges:true
-  #   depends_on:
-  #     - traefik
   #   healthcheck:
   #     disable: true
   #   environment:

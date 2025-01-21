@@ -29,7 +29,6 @@ services:
       BROWSER_WEB_URL: http://chrome:9222
       # OPENAI_API_KEY:  look ollama implementation
     depends_on:
-      - traefik
       - chrome
       - meilisearch
     networks:
@@ -40,8 +39,8 @@ services:
       - traefik.http.routers.hoarder-router.entrypoints=web,websecure
       - traefik.http.routers.hoarder-router.tls=true
       - traefik.http.routers.hoarder-router.tls.certresolver=letsencrypt
-      - traefik.http.routers.hoarder-router.service=hoarder-service
-      - traefik.http.services.hoarder-service.loadbalancer.server.port=3000
+      - traefik.http.routers.hoarder-router.service=hoarder-services
+      - traefik.http.services.hoarder-services.loadbalancer.server.port=3000
   
   chrome:
     container_name: chrome
@@ -49,8 +48,6 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     command:
@@ -67,8 +64,6 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     volumes:

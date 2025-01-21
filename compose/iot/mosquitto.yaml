@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    depends_on:
-      - traefik
     volumes:
       - $DOCKER_DATA_DIR/mosquitto:/mosquitto
     environment:

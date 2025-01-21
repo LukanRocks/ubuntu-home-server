@@ -20,17 +20,18 @@ services:
       - /run/dbus:/run/dbus:ro
     environment:
       - TZ=$TZ
-    depends_on:
-      - traefik
+    # depends_on:
       # - mosquitto
       # - zigbee2mqtt
     network_mode: host
+    privileged: true
+    expose:
+      - 8123
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant-router.rule=Host(`ha.homeserver.lukan.rocks`)
       - traefik.http.routers.homeassistant-router.entrypoints=web,websecure
       - traefik.http.routers.homeassistant-router.tls=true
       - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt
-      - traefik.http.routers.homeassistant-router.service=homeassistant-service
-      - traefik.http.services.homeassistant-service.loadbalancer.server.port=8123
-    privileged: true
+      - traefik.http.routers.homeassistant-router.service=homeassistant-services
+      - traefik.http.services.homeassistant-services.loadbalancer.server.port=8123

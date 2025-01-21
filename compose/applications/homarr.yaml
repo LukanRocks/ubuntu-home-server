@@ -18,8 +18,6 @@ services:
       - $DOCKER_DATA_DIR/homarr/data:/data:rw
     environment:
       - TZ=$TZ
-    depends_on:
-      - traefik
     networks:
       - traefik-proxy
     labels:
