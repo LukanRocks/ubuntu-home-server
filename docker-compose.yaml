@@ -1,5 +1,5 @@
-# This network was created externally by running:
-# * sudo docker network create traefik-proxy
+name: ubuntu-home-server
+
 networks:
   traefik-proxy:
     name: traefik-proxy
@@ -26,4 +26,5 @@ include:
   - $APPLICATIONS_DIR/homarr.yaml
   - $APPLICATIONS_DIR/homebox.yaml
   - $APPLICATIONS_DIR/hoarder.yaml
+  # - $APPLICATIONS_DIR/yaffa.yaml
   # - $APPLICATIONS_DIR/excalidraw.yaml

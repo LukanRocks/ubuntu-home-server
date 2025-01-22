@@ -1,7 +1,5 @@
 # ! https://community.home-assistant.io/t/example-config-docker-with-home-assitant-mosquitto-zigbee2mqtt-and-traefik/632306
 # Home Assistant allows me to manage all things IoT and home automation.
-# name: home_assistant
-
 services:
   homeassistant:
     container_name: homeassistant
@@ -23,10 +21,8 @@ services:
     # depends_on:
       # - mosquitto
       # - zigbee2mqtt
-    network_mode: host
     privileged: true
-    expose:
-      - 8123
+    network_mode: host
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant-router.rule=Host(`ha.homeserver.lukan.rocks`)

@@ -30,16 +30,7 @@ services:
       # LetsEncrypt persistant data.
       # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/letsencrypt:/letsencrypt:rw
-    ports:
-      # Default HTTP unsecured port.
-      - 80:80
-      
-      # Default HTTPS secured port.
-      - 443:443
-    networks:
-      - traefik-proxy
-    extra_hosts: 
-      - host.docker.internal:host-gateway
+    network_mode: host
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)
@@ -47,3 +38,4 @@ services:
       - traefik.http.routers.traefik-router.tls=true
       - traefik.http.routers.traefik-router.tls.certresolver=letsencrypt
       - traefik.http.routers.traefik-router.service=api@internal
+      - traefik.http.services.api@internal.loadbalancer.server.port=8080
