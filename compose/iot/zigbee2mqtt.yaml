@@ -1,22 +1,28 @@
-# # Zigbee2MQTT manages all my zigbee devices.
-# services:
-#   zigbee2mqtt:
-#     container_name: zigbee2mqtt
-#     image: koenkk/zigbee2mqtt:latest
-#     restart: unless-stopped
-#     security_opt:
-#       - no-new-privileges:true
-#     volumes:
-#       # Persistant data.
-#       # * :rw - Read and Write.
-#       - $DOCKER_DATA_DIR/zigbee2mqtt:/app/data:rw
+# Zigbee2MQTT manages all my zigbee devices.
+services:
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/zigbee2mqtt:/app/data:rw
 
-#       # ! Learn More
-#       # * :rw - Read Only.
-#       - /run/udev:/run/udev:ro
-#     environment:
-#       - TZ=$TZ
-#     depends_on:
-#       # - mosquitto
-#     ports:
-#         - 8080:8080
+      # ! Learn More
+      # * :rw - Read Only.
+      - /run/udev:/run/udev:ro
+    environment:
+      - TZ=$TZ
+    depends_on:
+      - mosquitto
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.zigbee2mqtt-router.rule=Host(`z2m.homeserver.lukan.rocks`)
+      - traefik.http.routers.zigbee2mqtt-router.entrypoints=web,websecure
+      - traefik.http.routers.zigbee2mqtt-router.tls=true
+      - traefik.http.routers.zigbee2mqtt-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.zigbee2mqtt-router.service=zigbee2mqtt-services
+      - traefik.http.services.zigbee2mqtt-services.loadbalancer.server.port=8080

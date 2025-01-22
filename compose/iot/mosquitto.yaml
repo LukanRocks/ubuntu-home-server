@@ -1,4 +1,9 @@
+# ! https://community.home-assistant.io/t/example-config-docker-with-home-assitant-mosquitto-zigbee2mqtt-and-traefik/632306
 # Mosquitto is used as my local MQTT broker
+secrets:
+  mosquitto_broker:
+    file: $DOCKER_SECRETS_DIR/mosquitto_broker
+
 services:
   mosquitto:
     container_name: mosquitto
@@ -7,6 +12,14 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - $DOCKER_DATA_DIR/mosquitto:/mosquitto
-    environment:
-      - TZ=$TZ
+      - $DOCKER_CONFIG_DIR/mosquitto:/mosquitto/config:ro
+      - $DOCKER_DATA_DIR/mosquitto/data:/mosquitto/data:rw
+      - $DOCKER_DATA_DIR/mosquitto/log:/mosquitto/log:rw
+    secrets:
+      - mosquitto_broker
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mqtt-router.rule=Host(`mosquitto.homeserver.lukan.rocks`)
+      - traefik.http.routers.mqtt-router.entrypoints=mqtt,mqttsecure
