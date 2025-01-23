@@ -17,11 +17,13 @@ services:
       - /run/dbus:/run/dbus:ro
     environment:
       - TZ=$TZ
-    # depends_on:
-    #   - mosquitto
-    #   - zigbee2mqtt
+    depends_on:
+      - mosquitto
+      - zigbee2mqtt
     privileged: true
     network_mode: host
+    extra_hosts:
+      - mosquitto:172.18.0.100
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant-router.rule=Host(`ha.homeserver.lukan.rocks`)

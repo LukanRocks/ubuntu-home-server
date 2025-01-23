@@ -8,10 +8,6 @@ services:
       - no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/zigbee2mqtt:/app/data:rw
-
-      # ! Learn More
-      # * :rw - Read Only.
-      - /run/udev:/run/udev:ro
     environment:
       - TZ=$TZ
     depends_on:

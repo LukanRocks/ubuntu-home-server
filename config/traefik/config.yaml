@@ -19,10 +19,6 @@ entryPoints:
           scheme: https
   websecure:
     address: :443
-  mqtt:
-    address: :1833
-  mqttsecure:
-    address: :8883
 
 certificatesResolvers:
   letsencrypt:

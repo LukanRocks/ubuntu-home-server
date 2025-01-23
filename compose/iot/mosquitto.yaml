@@ -1,4 +1,3 @@
-# ! https://community.home-assistant.io/t/example-config-docker-with-home-assitant-mosquitto-zigbee2mqtt-and-traefik/632306
 # Mosquitto is used as my local MQTT broker
 secrets:
   mosquitto_broker:
@@ -18,8 +17,7 @@ services:
     secrets:
       - mosquitto_broker
     networks:
-      - traefik-proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.mqtt-router.rule=Host(`mosquitto.homeserver.lukan.rocks`)
-      - traefik.http.routers.mqtt-router.entrypoints=mqtt,mqttsecure
+      traefik-proxy:
+        ipv4_address: 172.18.0.100
+    ports:
+      - 1883:1883
