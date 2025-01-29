@@ -11,13 +11,13 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - $DOCKER_CONFIG_DIR/mosquitto:/mosquitto/config:ro
+      - $DOCKER_CONFIG_DIR/mosquitto:/mosquitto/config:rw
       - $DOCKER_DATA_DIR/mosquitto/data:/mosquitto/data:rw
       - $DOCKER_DATA_DIR/mosquitto/log:/mosquitto/log:rw
     secrets:
       - mosquitto_broker
     networks:
       traefik-proxy:
-        ipv4_address: 172.18.0.100
+        ipv4_address: 172.18.0.100 # fixed ip to be easily targeted
     ports:
       - 1883:1883
