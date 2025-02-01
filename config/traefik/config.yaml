@@ -4,7 +4,8 @@ global:
 
 # (Optional) Log level: [TRACE, DEBUG, INFO, WARN, ERROR, FATAL]
 log:
- level: ERROR
+ level: WARN
+ format: json
 
 # (Optional) Enable API and Dashboard here. Don't do in production.
 api: {}

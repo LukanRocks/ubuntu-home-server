@@ -23,13 +23,21 @@ services:
       # * :ro - Read Only.
       - $DOCKER_SOCK_DIR:ro
       
-      # Configuration file path.
+      # Local Time.
+      # * :rw - Read and Only.
+      - $DOCKER_LOCAL_DIR
+
+      # Configuration file.
       # * :ro - Read Only.
       - $DOCKER_CONFIG_DIR/traefik/config.yaml:/etc/traefik/traefik.yaml:ro
       
       # LetsEncrypt persistant data.
       # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/letsencrypt:/letsencrypt:rw
+
+      # Logs.
+      # * :rw - Read and Write.
+      - $DOCKER_LOGS_DIR/traefik:/var/log/traefik:rw
     network_mode: host
     labels:
       - traefik.enable=true

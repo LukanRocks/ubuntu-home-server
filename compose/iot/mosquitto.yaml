@@ -11,9 +11,17 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
+      # Configuration Files.
+      # * :rw - Read and Write.
       - $DOCKER_CONFIG_DIR/mosquitto:/mosquitto/config:rw
-      - $DOCKER_DATA_DIR/mosquitto/data:/mosquitto/data:rw
-      - $DOCKER_DATA_DIR/mosquitto/log:/mosquitto/log:rw
+      
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/mosquitto:/mosquitto/data:rw
+
+      # Logs.
+      # * :rw - Read and Write.
+      - $DOCKER_LOGS_DIR/mosquitto:/mosquitto/log:rw
     secrets:
       - mosquitto_broker
     networks:

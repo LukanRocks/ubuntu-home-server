@@ -11,9 +11,12 @@ services:
       # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/homeassistant:/config:rw
 
+      # Local Time.
+      # * :rw - Read and Only.
+      - $DOCKER_LOCAL_DIR
+      
       # ! Learn More
       # * :rw - Read Only.
-      - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     environment:
       - TZ=$TZ
