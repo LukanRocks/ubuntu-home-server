@@ -18,6 +18,8 @@ include:
   # https://github.com/BigBoot/AutoKuma?tab=readme-ov-file
   - $INFRASTRUCTURE_DIR/duplicati.yaml
   - $INFRASTRUCTURE_DIR/watchtower.yaml
+  # https://dozzle.dev/
+  # https://docs.doppler.com/docs/start
 
   # Observability
   # Grafana
@@ -37,6 +39,7 @@ include:
   # https://help.penpot.app/technical-guide/getting-started/#install-with-docker
   # https://github.com/usememos/memos
   # https://github.com/outline/outline
+  # https://github.com/open-webui/open-webui
 
   # Development
   # https://supabase.com/docs/guides/self-hosting/docker
