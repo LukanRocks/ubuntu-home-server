@@ -1,6 +1,9 @@
 {
     "material-icon-theme.folders.associations": {
         "compose": "Docker",
+        "applications": "Client",
+        "infrastructure": "Pipe",
+        "iot": "Home",
         "data/duplicati": "Coverage",
         "data/homeassistant": "Coverage",
         "data/hoarder": "Coverage",

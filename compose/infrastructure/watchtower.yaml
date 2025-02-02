@@ -1,0 +1,20 @@
+# A container-based solution for automating Docker container base image updates.
+services:
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      WATCHTOWER_CLEANUP: true
+      WATCHTOWER_REMOVE_VOLUMES: true
+      WATCHTOWER_LABEL_ENABLE: true
+    volumes:
+      # Docker Network access.
+      # * :ro - Read Write
+      - $DOCKER_SOCK_DIR:rw
+      
+      # Local Time.
+      # * :rw - Read and Only.
+      - $DOCKER_LOCAL_DIR

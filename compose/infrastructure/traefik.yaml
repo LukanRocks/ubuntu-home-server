@@ -40,6 +40,7 @@ services:
       - $DOCKER_LOGS_DIR/traefik:/var/log/traefik:rw
     network_mode: host
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)
       - traefik.http.routers.traefik-router.entrypoints=web,websecure

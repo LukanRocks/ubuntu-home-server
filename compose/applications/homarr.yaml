@@ -21,6 +21,7 @@ services:
     networks:
       - traefik-proxy
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.homarr-router.rule=Host(`homeserver.lukan.rocks`)
       - traefik.http.routers.homarr-router.entrypoints=web,websecure

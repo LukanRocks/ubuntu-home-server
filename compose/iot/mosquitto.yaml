@@ -29,3 +29,5 @@ services:
         ipv4_address: 172.18.0.100 # fixed ip to be easily targeted
     ports:
       - 1883:1883
+    labels:
+      - com.centurylinklabs.watchtower.enable=false

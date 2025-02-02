@@ -31,6 +31,7 @@ services:
     networks:
       - traefik-proxy
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.duplicati-router.rule=Host(`duplicati.homeserver.lukan.rocks`)
       - traefik.http.routers.duplicati-router.entrypoints=web,websecure

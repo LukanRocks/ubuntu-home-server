@@ -19,6 +19,7 @@ services:
     networks:
       - traefik-proxy
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.portainer-router.rule=Host(`portainer.homeserver.lukan.rocks`)
       - traefik.http.routers.portainer-router.entrypoints=web,websecure

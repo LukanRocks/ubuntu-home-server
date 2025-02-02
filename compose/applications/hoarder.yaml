@@ -34,6 +34,7 @@ services:
     networks:
       - traefik-proxy
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.hoarder-router.rule=Host(`hoarder.homeserver.lukan.rocks`)
       - traefik.http.routers.hoarder-router.entrypoints=web,websecure
