@@ -10,6 +10,8 @@ services:
       WATCHTOWER_CLEANUP: true
       WATCHTOWER_REMOVE_VOLUMES: true
       WATCHTOWER_LABEL_ENABLE: true
+    networks:
+      - traefik-proxy
     volumes:
       # Docker Network access.
       # * :ro - Read Write
