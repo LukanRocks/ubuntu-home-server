@@ -15,11 +15,14 @@ include:
   - $INFRASTRUCTURE_DIR/traefik.yaml
   - $INFRASTRUCTURE_DIR/portainer.yaml
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml
-  # https://github.com/BigBoot/AutoKuma?tab=readme-ov-file
   - $INFRASTRUCTURE_DIR/duplicati.yaml
   - $INFRASTRUCTURE_DIR/watchtower.yaml
+  # https://github.com/BigBoot/AutoKuma?tab=readme-ov-file
   # https://dozzle.dev/
   # https://docs.doppler.com/docs/start
+
+  # Development
+  # - $DEVELOPMENT_DIR/supabase.yaml # https://supabase.com/docs/guides/self-hosting/docker
 
   # Observability
   # Grafana
@@ -34,12 +37,8 @@ include:
   - $APPLICATIONS_DIR/homarr.yaml
   - $APPLICATIONS_DIR/homebox.yaml
   - $APPLICATIONS_DIR/hoarder.yaml
-  # - $APPLICATIONS_DIR/yaffa.yaml
   # - $APPLICATIONS_DIR/excalidraw.yaml
   # https://help.penpot.app/technical-guide/getting-started/#install-with-docker
   # https://github.com/usememos/memos
   # https://github.com/outline/outline
   # https://github.com/open-webui/open-webui
-
-  # Development
-  # https://supabase.com/docs/guides/self-hosting/docker

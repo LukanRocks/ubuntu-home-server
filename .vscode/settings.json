@@ -4,14 +4,6 @@
         "applications": "Client",
         "infrastructure": "Pipe",
         "iot": "Home",
-        "data/duplicati": "Coverage",
-        "data/homeassistant": "Coverage",
-        "data/hoarder": "Coverage",
-        "data/homarr": "Coverage",
-        "data/homebox": "Coverage",
-        "data/mosquitto": "Coverage",
-        "data/traefik": "Coverage",
-        "data/uptimekuma": "Coverage",
-        "data/zigbee2mqtt": "Coverage",
+        "arr": "Kubernetes",
     }
 }
