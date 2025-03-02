@@ -32,6 +32,7 @@ include:
   - $IOT_DIR/homeassistant.yaml
   - $IOT_DIR/mosquitto.yaml
   - $IOT_DIR/zigbee2mqtt.yaml
+  - $IOT_DIR/matter-server.yaml
 
   # Applications
   - $APPLICATIONS_DIR/homarr.yaml
