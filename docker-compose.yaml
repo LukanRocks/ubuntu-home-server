@@ -14,6 +14,7 @@ include:
   # Infrastructure
   - $INFRASTRUCTURE_DIR/traefik.yaml
   - $INFRASTRUCTURE_DIR/portainer.yaml
+  - $INFRASTRUCTURE_DIR/checkmate.yaml
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml
   - $INFRASTRUCTURE_DIR/duplicati.yaml
   - $INFRASTRUCTURE_DIR/watchtower.yaml

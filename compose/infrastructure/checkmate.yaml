@@ -1,0 +1,97 @@
+services:
+  checkmate-client:
+    container_name: checkmate-client
+    image: bluewaveuptime/uptime_client:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      UPTIME_APP_API_BASE_URL: "http://localhost:5000/api/v1" # I can use traefik to point to the server
+    networks:
+      - traefik-proxy
+    depends_on:
+      - server
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.routers.checkmate-client-router.rule=Host(`checkmate.homeserver.lukan.rocks`)
+      - traefik.http.routers.checkmate-client-router.entrypoints=web,websecure
+      - traefik.http.routers.checkmate-client-router.tls=true
+      - traefik.http.routers.checkmate-client-router.tls.certresolver=letsencrypt
+      
+  checkmate-capture:
+    container_name: checkmate-capture
+    image: ghcr.io/bluewave-labs/capture:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik-proxy
+    # ports:
+    #   - 59232:59232
+    environment:
+      - API_SECRET=REPLACE_WITH_YOUR_SECRET
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.routers.checkmate-capture-router.rule=Host(`checkmate-capture.homeserver.lukan.rocks`)
+      - traefik.http.routers.checkmate-capture-router.entrypoints=web,websecure
+      - traefik.http.routers.checkmate-capture-router.tls=true
+      - traefik.http.routers.checkmate-capture-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.checkmate-capture-router.service=checkmate-capture-services
+      - traefik.http.services.checkmate-capture-services.loadbalancer.server.port=59232
+      
+
+  server:
+    container_name: checkmate-server
+    image: bluewaveuptime/uptime_server:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik-proxy
+    ports:
+      - 5000:5000
+    depends_on:
+      - redis
+      - mongodb
+    volumes:
+      # Docker Network access.
+      # * :rw - Read Only.
+      - $DOCKER_SOCK_DIR:ro
+    environment:
+      - DB_CONNECTION_STRING=mongodb://mongodb:27017/uptime_db
+      - REDIS_HOST=redis
+  
+  redis:
+    container_name: checkmate-redis
+    image: bluewaveuptime/uptime_redis:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik-proxy
+    ports:
+      - 6379:6379
+    volumes:
+      - $DOCKER_DATA_DIR/checkmate/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+  mongodb:
+    container_name: checkmate-mongodb
+    image: bluewaveuptime/uptime_database_mongo:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik-proxy
+    volumes:
+      - $DOCKER_DATA_DIR/checkmate/mongo:/data/db
+    command: ["mongod", "--quiet"]
+    ports:
+      - "27017:27017"

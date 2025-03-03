@@ -44,7 +44,7 @@ services:
       - traefik.http.services.hoarder-services.loadbalancer.server.port=3000
   
   chrome:
-    container_name: chrome
+    container_name: hoarder-chrome
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
     security_opt:
@@ -60,7 +60,7 @@ services:
       - --hide-scrollbars
 
   meilisearch:
-    container_name: meilisearch
+    container_name: hoarder-meilisearch
     image: getmeili/meilisearch:v1.11.1
     restart: unless-stopped
     security_opt:
