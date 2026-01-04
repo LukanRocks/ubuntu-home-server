@@ -12,18 +12,16 @@ networks:
 # TODO: Create a script that auto generates the include paths
 include:
   # Infrastructure
-  - $INFRASTRUCTURE_DIR/traefik.yaml
-  - $INFRASTRUCTURE_DIR/portainer.yaml
-  - $INFRASTRUCTURE_DIR/checkmate.yaml
-  - $INFRASTRUCTURE_DIR/uptimekuma.yaml
-  - $INFRASTRUCTURE_DIR/duplicati.yaml
-  - $INFRASTRUCTURE_DIR/watchtower.yaml
-  # https://github.com/BigBoot/AutoKuma?tab=readme-ov-file
+  - $INFRASTRUCTURE_DIR/traefik.yaml # Domain routing reverse proxy and certificate manager
+  - $INFRASTRUCTURE_DIR/portainer.yaml # Docker management UI
+  - $INFRASTRUCTURE_DIR/checkmate.yaml # Uptime monitoring
+  - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring
+  - $INFRASTRUCTURE_DIR/duplicati.yaml # Backup solution
+  - $INFRASTRUCTURE_DIR/watchtower.yaml # Automatic docker container updates
+  # https://github.com/BigBoot/AutoKuma
   # https://dozzle.dev/
   # https://docs.doppler.com/docs/start
-
-  # Development
-  # - $DEVELOPMENT_DIR/supabase.yaml # https://supabase.com/docs/guides/self-hosting/docker
+  # https://github.com/steveiliop56/tinyauth
 
   # Observability
   # Grafana
@@ -31,9 +29,10 @@ include:
 
   # IoT
   - $IOT_DIR/homeassistant.yaml
+  - $IOT_DIR/music-assistant.yaml
+  - $IOT_DIR/matter-server.yaml
   - $IOT_DIR/mosquitto.yaml
   - $IOT_DIR/zigbee2mqtt.yaml
-  - $IOT_DIR/matter-server.yaml
 
   # Applications
   - $APPLICATIONS_DIR/homarr.yaml
