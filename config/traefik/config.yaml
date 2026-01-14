@@ -27,7 +27,7 @@ certificatesResolvers:
       storage: /letsencrypt/credentials.json
       caServer: "https://acme-v02.api.letsencrypt.org/directory"
       dnsChallenge:
-        provider: cloudflare
+        provider: vercel
         resolvers:
           - "1.1.1.1:53"
           - "8.8.8.8:53"
