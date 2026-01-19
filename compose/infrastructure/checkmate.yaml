@@ -53,8 +53,8 @@ services:
     ports:
       - 5000:5000
     depends_on:
-      - redis
-      - mongodb
+      - checkmate-redis
+      - checkmate-mongodb
     volumes:
       # Docker Network access.
       # * :rw - Read Only.
@@ -63,7 +63,7 @@ services:
       - DB_CONNECTION_STRING=mongodb://mongodb:27017/uptime_db
       - REDIS_HOST=redis
   
-  redis:
+  checkmate-redis:
     container_name: checkmate-redis
     image: bluewaveuptime/uptime_redis:latest
     restart: unless-stopped
@@ -82,7 +82,7 @@ services:
       retries: 5
       start_period: 5s
 
-  mongodb:
+  checkmate-mongodb:
     container_name: checkmate-mongodb
     image: bluewaveuptime/uptime_database_mongo:latest
     restart: unless-stopped

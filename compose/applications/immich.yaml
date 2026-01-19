@@ -1,0 +1,71 @@
+# 
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      # Upload location.
+      # * :rw - Read and Write.
+      - truenas_smb:/data:rw
+
+      # Local Time.
+      # * :rw - Read and Only.
+      - $DOCKER_LOCAL_DIR
+    depends_on:
+      - immich_redis
+      - immich_postgres
+    healthcheck:
+      disable: false
+    ports:
+      - '2283:2283'
+    # extends:
+    #   file: hwaccel.transcoding.yml
+    #   service: cpu # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    restart: unless-stopped
+    volumes:
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/immich/cache:/cache:rw
+    healthcheck:
+      disable: false
+    # extends: # uncomment this section for hardware acceleration - see https://docs.immich.app/features/ml-hardware-acceleration
+    #   file: hwaccel.ml.yml
+    #   service: cpu # set to one of [armnn, cuda, rocm, openvino, openvino-wsl, rknn] for accelerated inference - use the `-wsl` version for WSL2 where applicable
+
+  immich_redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:9@sha256:fb8d272e529ea567b9bf1302245796f21a2672b8368ca3fcb938ac334e613c8f
+    restart: unless-stopped
+    healthcheck:
+      test: redis-cli ping || exit 1
+
+  immich_postgres:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: Ch.eMmP.ndKRtBw6KgHYQ_YKBUF9!ZYyB_Jh3u7W-7hBxphYtsxPf*oJLkiVUqhz
+      POSTGRES_USER: immich_user
+      POSTGRES_DB: immich_db
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+      # Uncomment the DB_STORAGE_TYPE: 'HDD' var if your database isn't stored on SSDs
+      # DB_STORAGE_TYPE: 'HDD'
+    volumes:
+      # Persistant data.
+      # * :rw - Read and Write.
+      - $DOCKER_DATA_DIR/immich/data:/var/lib/postgresql/data:rw
+    shm_size: 128mb
+
+
+volumes:
+    truenas_smb:
+      driver: local
+      driver_opts:
+        type: cifs
+        device: //192.168.1.5/album
+        o: username=lukanvanderlinde,password=Rapnzi4oBQrw2EQfyTUkCRX4TTxdx4UQh-a@uZrEDJoeau@gh-Pbb@96Cy6yLHtd

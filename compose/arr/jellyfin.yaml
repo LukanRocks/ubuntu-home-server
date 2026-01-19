@@ -1,0 +1,42 @@
+# Media server for streaming your personal media collection
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin:latest
+    restart: unless-stopped
+    ports:
+      - 8096:8096/tcp
+      # - 7359:7359/udp # Auto-discovery port
+    # security_opt:
+    #   - no-new-privileges:true
+    volumes:
+      # Configuration Files.
+      # * :rw - Read and Write.
+      - $DOCKER_CONFIG_DIR/jellyfin/config:/config:rw
+      - $DOCKER_CONFIG_DIR/jellyfin/cache:/cache:rw
+
+      # Media Library.
+      - $SMB_LIBRARY_DIR:/media:ro
+    environment:
+      - TZ=$TZ
+      - /dev/dri:/dev/dri # Optional - enables hardware acceleration if supported by host and container 
+      # - JELLYFIN_PublishedServerUrl=http://example.com # Optional - alternative address used for autodiscovery
+    
+    
+    
+    # # Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    # extra_hosts:
+    #   - 'host.docker.internal:host-gateway'
+
+
+
+    # networks:
+    #   - traefik-proxy
+    # labels:
+    #   - com.centurylinklabs.watchtower.enable=true
+    #   - traefik.enable=true
+    #   - traefik.http.routers.homebox-router.rule=Host(`homebox.homeserver.lukan.rocks`)
+    #   - traefik.http.routers.homebox-router.entrypoints=web,websecure
+    #   - traefik.http.routers.homebox-router.tls=true
+    #   - traefik.http.routers.homebox-router.tls.certresolver=letsencrypt
+

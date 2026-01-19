@@ -16,7 +16,6 @@ include:
   - $INFRASTRUCTURE_DIR/portainer.yaml # Docker management UI
   - $INFRASTRUCTURE_DIR/checkmate.yaml # Uptime monitoring
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring
-  - $INFRASTRUCTURE_DIR/duplicati.yaml # Backup solution
   - $INFRASTRUCTURE_DIR/watchtower.yaml # Automatic docker container updates
   # https://github.com/BigBoot/AutoKuma
   # https://dozzle.dev/
@@ -38,7 +37,7 @@ include:
   - $APPLICATIONS_DIR/homarr.yaml
   - $APPLICATIONS_DIR/homebox.yaml
   - $APPLICATIONS_DIR/hoarder.yaml
-  # - $APPLICATIONS_DIR/excalidraw.yaml
+  # - $APPLICATIONS_DIR/immich.yaml
   # https://help.penpot.app/technical-guide/getting-started/#install-with-docker
   # https://github.com/usememos/memos
   # https://github.com/outline/outline
