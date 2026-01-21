@@ -14,7 +14,7 @@ include:
   # Infrastructure
   - $INFRASTRUCTURE_DIR/traefik.yaml # Domain routing reverse proxy and certificate manager
   - $INFRASTRUCTURE_DIR/portainer.yaml # Docker management UI
-  - $INFRASTRUCTURE_DIR/checkmate.yaml # Uptime monitoring
+  # - $INFRASTRUCTURE_DIR/checkmate.yaml # Uptime monitoring
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring
   - $INFRASTRUCTURE_DIR/watchtower.yaml # Automatic docker container updates
   # https://github.com/BigBoot/AutoKuma

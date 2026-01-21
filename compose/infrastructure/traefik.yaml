@@ -1,23 +1,13 @@
 # Traefik handles the reverse proxy and certificates validation.
-secrets:
-  vercel_api_token:
-    file: $DOCKER_SECRETS_DIR/vercel_api_token
-  vercel_team_id:
-    file: $DOCKER_SECRETS_DIR/vercel_team_id
 
 services:
   traefik:
     container_name: traefik
     image: docker.io/library/traefik:latest
     restart: unless-stopped
+    env_file: $DOCKER_SECRETS_DIR/traefik.env
     security_opt:
       - no-new-privileges:true
-    environment:
-      VERCEL_API_TOKEN: /run/secrets/vercel_api_token
-      VERCEL_TEAM_ID: /run/secrets/vercel_team_id
-    secrets:
-      - vercel_api_token
-      - vercel_team_id
     volumes:
       # Docker Network access.
       # * :ro - Read Only.
