@@ -12,8 +12,8 @@ services:
       - $DOCKER_DATA_DIR/zigbee2mqtt:/app/data:rw
 
       # Local Time.
-      # * :rw - Read and Write.
-      - $DOCKER_LOCAL_DIR
+      # * :ro - Read and Write.
+      - $DOCKER_LOCAL_DIR:ro
 
       # Logs.
       # * :rw - Read and Write.

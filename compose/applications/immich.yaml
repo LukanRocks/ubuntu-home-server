@@ -10,8 +10,8 @@ services:
       - truenas_smb:/data:rw
 
       # Local Time.
-      # * :rw - Read and Only.
-      - $DOCKER_LOCAL_DIR
+      # * :ro - Read and Only.
+      - $DOCKER_LOCAL_DIR:ro
     depends_on:
       - immich_redis
       - immich_postgres

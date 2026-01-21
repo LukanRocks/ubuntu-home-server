@@ -18,5 +18,5 @@ services:
       - $DOCKER_SOCK_DIR:rw
       
       # Local Time.
-      # * :rw - Read and Only.
-      - $DOCKER_LOCAL_DIR
+      # * :ro - Read and Only.
+      - $DOCKER_LOCAL_DIR:ro

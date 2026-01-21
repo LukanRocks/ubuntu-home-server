@@ -12,8 +12,8 @@ services:
       - $DOCKER_DATA_DIR/homeassistant:/config:rw
 
       # Local Time.
-      # * :rw - Read and Only.
-      - $DOCKER_LOCAL_DIR
+      # * :ro - Read and Only.
+      - $DOCKER_LOCAL_DIR:ro
       
       # !TODO Learn More
       # * :rw - Read Only.
