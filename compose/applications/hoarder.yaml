@@ -23,7 +23,7 @@ services:
       DATA_DIR: /data
       DISABLE_SIGNUPS: true
       NEXTAUTH_SECRET: /run/secrets/hoarder_nextauth
-      NEXTAUTH_URL: https://hoarder.homeserver.lukan.rocks
+      NEXTAUTH_URL: https://hoarder.homelab.lukan.rocks
       MEILI_ADDR: http://meilisearch:7700
       MEILI_MASTER_KEY: /run/secrets/meili_master_key
       BROWSER_WEB_URL: http://chrome:9222
@@ -36,7 +36,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.routers.hoarder-router.rule=Host(`hoarder.homeserver.lukan.rocks`)
+      - traefik.http.routers.hoarder-router.rule=Host(`hoarder.homelab.lukan.rocks`)
       - traefik.http.routers.hoarder-router.entrypoints=web,websecure
       - traefik.http.routers.hoarder-router.tls=true
       - traefik.http.routers.hoarder-router.tls.certresolver=letsencrypt

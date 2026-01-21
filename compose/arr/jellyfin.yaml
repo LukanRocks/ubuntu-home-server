@@ -35,7 +35,7 @@ services:
     # labels:
     #   - com.centurylinklabs.watchtower.enable=true
     #   - traefik.enable=true
-    #   - traefik.http.routers.homebox-router.rule=Host(`homebox.homeserver.lukan.rocks`)
+    #   - traefik.http.routers.homebox-router.rule=Host(`homebox.homelab.lukan.rocks`)
     #   - traefik.http.routers.homebox-router.entrypoints=web,websecure
     #   - traefik.http.routers.homebox-router.tls=true
     #   - traefik.http.routers.homebox-router.tls.certresolver=letsencrypt

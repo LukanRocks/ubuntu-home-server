@@ -23,7 +23,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.routers.homarr-router.rule=Host(`homeserver.lukan.rocks`)
+      - traefik.http.routers.homarr-router.rule=Host(`homelab.lukan.rocks`)
       - traefik.http.routers.homarr-router.entrypoints=web,websecure
       - traefik.http.routers.homarr-router.tls=true
       - traefik.http.routers.homarr-router.tls.certresolver=letsencrypt

@@ -25,7 +25,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.routers.zigbee2mqtt-router.rule=Host(`z2m.homeserver.lukan.rocks`)
+      - traefik.http.routers.zigbee2mqtt-router.rule=Host(`z2m.homelab.lukan.rocks`)
       - traefik.http.routers.zigbee2mqtt-router.entrypoints=web,websecure
       - traefik.http.routers.zigbee2mqtt-router.tls=true
       - traefik.http.routers.zigbee2mqtt-router.tls.certresolver=letsencrypt

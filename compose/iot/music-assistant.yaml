@@ -20,7 +20,7 @@ services:
     # labels:
       # - com.centurylinklabs.watchtower.enable=true
       # - traefik.enable=true
-      # - traefik.http.routers.homeassistant-router.rule=Host(`ma.homeserver.lukan.rocks`)
+      # - traefik.http.routers.homeassistant-router.rule=Host(`ma.homelab.lukan.rocks`)
       # - traefik.http.routers.homeassistant-router.entrypoints=web,websecure
       # - traefik.http.routers.homeassistant-router.tls=true
       # - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt

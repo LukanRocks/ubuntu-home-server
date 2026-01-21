@@ -14,7 +14,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.routers.checkmate-client-router.rule=Host(`checkmate.homeserver.lukan.rocks`)
+      - traefik.http.routers.checkmate-client-router.rule=Host(`checkmate.homelab.lukan.rocks`)
       - traefik.http.routers.checkmate-client-router.entrypoints=web,websecure
       - traefik.http.routers.checkmate-client-router.tls=true
       - traefik.http.routers.checkmate-client-router.tls.certresolver=letsencrypt
@@ -34,7 +34,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.routers.checkmate-capture-router.rule=Host(`checkmate-capture.homeserver.lukan.rocks`)
+      - traefik.http.routers.checkmate-capture-router.rule=Host(`checkmate-capture.homelab.lukan.rocks`)
       - traefik.http.routers.checkmate-capture-router.entrypoints=web,websecure
       - traefik.http.routers.checkmate-capture-router.tls=true
       - traefik.http.routers.checkmate-capture-router.tls.certresolver=letsencrypt

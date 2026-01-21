@@ -17,7 +17,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)
+      - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homelab.lukan.rocks`)
       - traefik.http.routers.uptimekuma-router.entrypoints=web,websecure
       - traefik.http.routers.uptimekuma-router.tls=true
       - traefik.http.routers.uptimekuma-router.tls.certresolver=letsencrypt
