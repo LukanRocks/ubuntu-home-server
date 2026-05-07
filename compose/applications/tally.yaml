@@ -1,0 +1,19 @@
+# My boardgames manager
+services:
+  tally:
+    container_name: tally
+    image: ghcr.io/lukanrocks/tally:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/tally:/app/data:rw
+    networks:
+      - traefik-proxy
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.routers.tally-router.rule=Host(`tally.homeserver.lukan.rocks`)
+      - traefik.http.routers.tally-router.entrypoints=web,websecure
+      - traefik.http.routers.tally-router.tls=true
+      - traefik.http.routers.tally-router.tls.certresolver=letsencrypt
