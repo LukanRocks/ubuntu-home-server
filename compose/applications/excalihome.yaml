@@ -1,0 +1,18 @@
+services:
+  excalihome:
+    container_name: excalihome
+    image: ghcr.io/lukanrocks/excalihome:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/excalihome:/app/data:rw
+    networks:
+      - traefik-proxy
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.routers.excalihome-router.rule=Host(`excalihome.homeserver.lukan.rocks`)
+      - traefik.http.routers.excalihome-router.entrypoints=web,websecure
+      - traefik.http.routers.excalihome-router.tls=true
+      - traefik.http.routers.excalihome-router.tls.certresolver=letsencrypt

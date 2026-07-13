@@ -34,10 +34,11 @@ include:
   - $IOT_DIR/zigbee2mqtt.yaml
 
   # Applications
-  - $APPLICATIONS_DIR/tally.yaml
+  - $APPLICATIONS_DIR/excalihome.yaml
+  - $APPLICATIONS_DIR/hoarder.yaml
   - $APPLICATIONS_DIR/homarr.yaml
   - $APPLICATIONS_DIR/homebox.yaml
-  - $APPLICATIONS_DIR/hoarder.yaml
+  - $APPLICATIONS_DIR/tally.yaml
   # - $APPLICATIONS_DIR/immich.yaml
   # https://help.penpot.app/technical-guide/getting-started/#install-with-docker
   # https://github.com/usememos/memos
