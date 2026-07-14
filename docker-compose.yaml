@@ -21,7 +21,6 @@ include:
   - $INFRASTRUCTURE_DIR/portainer.yaml # Docker management UI
   - $INFRASTRUCTURE_DIR/traefik.yaml # Domain routing, reverse proxy and certificate manager
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring
-  - $INFRASTRUCTURE_DIR/watchtower.yaml # Automatic docker container updates
 
   # IoT
   - $IOT_DIR/dynsec-admin.yaml # MQTT dynamic security admin web interface

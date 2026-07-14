@@ -11,7 +11,6 @@ services:
     networks:
       - traefik-proxy
     labels:
-      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.tally-router.rule=Host(`tally.homeserver.lukan.rocks`)
       - traefik.http.routers.tally-router.entrypoints=web,websecure

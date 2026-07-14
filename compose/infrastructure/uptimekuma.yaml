@@ -15,7 +15,6 @@ services:
     networks:
       - traefik-proxy
     labels:
-      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)
       - traefik.http.routers.uptimekuma-router.entrypoints=web,websecure

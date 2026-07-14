@@ -33,7 +33,6 @@ services:
     networks:
       - traefik-proxy
     labels:
-      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.hoarder-router.rule=Host(`hoarder.homeserver.lukan.rocks`)
       - traefik.http.routers.hoarder-router.entrypoints=web,websecure
@@ -57,8 +56,6 @@ services:
       - --remote-debugging-address=0.0.0.0
       - --remote-debugging-port=9222
       - --hide-scrollbars
-    labels:
-      - com.centurylinklabs.watchtower.enable=false
 
   meilisearch:
     container_name: hoarder-meilisearch
@@ -75,5 +72,3 @@ services:
     environment:
       MEILI_NO_ANALYTICS: true
       MEILI_MASTER_KEY: /run/secrets/meili_master_key
-    labels:
-      - com.centurylinklabs.watchtower.enable=false

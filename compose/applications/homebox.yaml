@@ -23,7 +23,6 @@ services:
     networks:
       - traefik-proxy
     labels:
-      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.homebox-router.rule=Host(`homebox.homeserver.lukan.rocks`)
       - traefik.http.routers.homebox-router.entrypoints=web,websecure

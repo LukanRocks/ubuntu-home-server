@@ -10,7 +10,6 @@ services:
     networks:
       - traefik-proxy
     labels:
-      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.http.routers.excalihome-router.rule=Host(`excalihome.homeserver.lukan.rocks`)
       - traefik.http.routers.excalihome-router.entrypoints=web,websecure

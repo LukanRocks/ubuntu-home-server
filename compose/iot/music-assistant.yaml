@@ -18,7 +18,6 @@ services:
     privileged: true
     network_mode: host
     # labels:
-      # - com.centurylinklabs.watchtower.enable=true
       # - traefik.enable=true
       # - traefik.http.routers.homeassistant-router.rule=Host(`ma.homeserver.lukan.rocks`)
       # - traefik.http.routers.homeassistant-router.entrypoints=web,websecure
