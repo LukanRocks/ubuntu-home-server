@@ -10,7 +10,7 @@ services:
       # Docker Network access.
       # * :rw - Read and Write.
       - $DOCKER_SOCK_DIR:rw
-      
+
       # Persistant data.
       # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/portainer:/data:rw
@@ -19,7 +19,7 @@ services:
     networks:
       - traefik-proxy
     labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.portainer-router.rule=Host(`portainer.homeserver.lukan.rocks`)
       - traefik.http.routers.portainer-router.entrypoints=web,websecure
@@ -27,4 +27,3 @@ services:
       - traefik.http.routers.portainer-router.tls.certresolver=letsencrypt
       - traefik.http.routers.portainer-router.service=portainer-services
       - traefik.http.services.portainer-services.loadbalancer.server.port=9000
-

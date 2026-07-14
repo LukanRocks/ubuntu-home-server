@@ -12,7 +12,7 @@ services:
       # Docker Network access.
       # * :ro - Read Only.
       - $DOCKER_SOCK_DIR:ro
-      
+
       # Local Time.
       # * :rw - Read and Only.
       - $DOCKER_LOCAL_DIR
@@ -20,7 +20,7 @@ services:
       # Configuration file.
       # * :ro - Read Only.
       - $DOCKER_CONFIG_DIR/traefik/config.yaml:/etc/traefik/traefik.yaml:ro
-      
+
       # LetsEncrypt persistant data.
       # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/letsencrypt:/letsencrypt:rw
@@ -30,7 +30,7 @@ services:
       - $DOCKER_LOGS_DIR/traefik:/var/log/traefik:rw
     network_mode: host
     labels:
-      - com.centurylinklabs.watchtower.enable=true
+      - com.centurylinklabs.watchtower.enable=false
       - traefik.enable=true
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)
       - traefik.http.routers.traefik-router.entrypoints=web,websecure
