@@ -1,4 +1,5 @@
-# My boardgames manager
+# My boardgames manager - https://github.com/LukanRocks/tally
+
 services:
   tally:
     container_name: tally

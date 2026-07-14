@@ -1,11 +1,13 @@
+# Local Matter broker - https://github.com/home-assistant-libs/python-matter-server
+
 services:
   matter-server:
     container_name: matter-server
     image: ghcr.io/home-assistant-libs/python-matter-server:stable
     restart: unless-stopped
+    network_mode: host
     security_opt:
       - apparmor=unconfined
     volumes:
-      - $DOCKER_DATA_DIR/matter-server:/data
-      - /run/dbus:/run/dbus:ro
-    network_mode: host
+      - $DOCKER_DATA_DIR/matter-server:/data:rw
+      - $DOCKER_SOCK_DIR:ro

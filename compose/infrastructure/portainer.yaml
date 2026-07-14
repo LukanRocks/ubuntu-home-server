@@ -1,4 +1,5 @@
-# Portainer allows me to quickly manage my containers though a great UI.
+# Portainer allows me to quickly manage my containers though a great UI. - https://docs.portainer.io/
+
 services:
   portainer:
     container_name: portainer
@@ -6,16 +7,11 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    volumes:
-      # Docker Network access.
-      # * :rw - Read and Write.
-      - $DOCKER_SOCK_DIR:rw
-
-      # Persistant data.
-      # * :rw - Read and Write.
-      - $DOCKER_DATA_DIR/portainer:/data:rw
     environment:
       - TZ=$TZ
+    volumes:
+      - $DOCKER_SOCK_DIR:rw
+      - $DOCKER_DATA_DIR/portainer:/data:rw
     networks:
       - traefik-proxy
     labels:

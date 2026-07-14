@@ -1,4 +1,5 @@
-# UptimeKuma allows me to easily check the status of my services.
+# UptimeKuma allows me to easily check the status of my services. - https://github.com/louislam/uptime-kuma
+
 services:
   uptimekuma:
     container_name: uptimekuma
@@ -6,12 +7,10 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
-    volumes:
-      # Persistant data.
-      # * :rw - Read and Write.
-      - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
     environment:
       - TZ=$TZ
+    volumes:
+      - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
     networks:
       - traefik-proxy
     labels:

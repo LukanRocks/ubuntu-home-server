@@ -1,32 +1,23 @@
-# Home Assistant allows me to manage all things IoT and home automation.
+# Home Assistant allows me to manage all things IoT and home automation. - https://www.home-assistant.io/
+
 services:
   homeassistant:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      # Persistant data.
-      # * :rw - Read and Write.
-      - $DOCKER_DATA_DIR/homeassistant:/config:rw
-
-      # Local Time.
-      # * :rw - Read and Only.
-      - $DOCKER_LOCAL_DIR
-      
-      # !TODO Learn More
-      # * :rw - Read Only.
-      - /run/dbus:/run/dbus:ro
-    environment:
-      - TZ=$TZ
     depends_on:
       - mosquitto
       - zigbee2mqtt
     privileged: true
     network_mode: host
-    extra_hosts:
-      - mosquitto:172.18.0.100
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=$TZ
+    volumes:
+      - $DOCKER_DATA_DIR/homeassistant:/config:rw
+      - $DOCKER_LOCAL_DIR:ro
+      - $DOCKER_SOCK_DIR:ro
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant-router.rule=Host(`ha.homeserver.lukan.rocks`)
@@ -35,3 +26,5 @@ services:
       - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt
       - traefik.http.routers.homeassistant-router.service=homeassistant-services
       - traefik.http.services.homeassistant-services.loadbalancer.server.port=8123
+    extra_hosts:
+      - mosquitto:172.18.0.100

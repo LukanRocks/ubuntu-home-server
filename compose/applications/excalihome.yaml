@@ -1,3 +1,5 @@
+# Local manage Excalidraw app - https://github.com/LukanRocks/excalihome
+
 services:
   excalihome:
     container_name: excalihome

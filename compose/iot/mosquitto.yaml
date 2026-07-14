@@ -1,4 +1,5 @@
-# Mosquitto is used as my local MQTT broker
+# Mosquitto is used as my local MQTT broker - https://mosquitto.org/
+
 services:
   mosquitto:
     container_name: mosquitto
@@ -7,21 +8,13 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      # Configuration Files.
-      # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/mosquitto/config:/mosquitto/config:rw
-      
-      # Persistant data.
-      # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/mosquitto/data:/mosquitto/data:rw
-
-      # Logs.
-      # * :rw - Read and Write.
       - $DOCKER_LOGS_DIR/mosquitto:/mosquitto/log:rw
     networks:
       traefik-proxy:
         ipv4_address: 172.18.0.100 # fixed ip to be easily targeted | Maybe is unecessary, review later
-    ports:
-      - 1883:1883
     labels:
       - traefik.enable=false
+    ports:
+      - 1883:1883

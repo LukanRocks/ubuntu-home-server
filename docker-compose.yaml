@@ -13,8 +13,8 @@ networks:
 include:
   # Applications
   - $APPLICATIONS_DIR/excalihome.yaml # Local manage Excalidraw app
-  - $APPLICATIONS_DIR/hoarder.yaml # Bookmark management tool
   - $APPLICATIONS_DIR/homebox.yaml # Asset organization tool
+  - $APPLICATIONS_DIR/karakeep.yaml # Bookmark management tool
   - $APPLICATIONS_DIR/tally.yaml # Board games management tool
 
   # Infrastructure

@@ -1,15 +1,16 @@
-# MQTT broker + dynamic security web admin
+# MQTT broker + dynamic security web admin - https://github.com/zivillian/dynamic-security-admin
+
 services:
   dynsec-admin:
     container_name: dynsec-admin
     image: zivillian/dynamic-security-admin:latest
     restart: unless-stopped
+    depends_on:
+      - mosquitto
     security_opt:
       - no-new-privileges:true
     environment:
       - MQTTSERVER=mosquitto # resolves via the shared 'mqtt' network, port is fixed at 1883
-    depends_on:
-      - mosquitto
     networks:
       - traefik-proxy
     labels:

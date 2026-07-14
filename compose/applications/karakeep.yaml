@@ -1,0 +1,66 @@
+# Karakeep is a bookmark links service - https://github.com/karakeep-app/karakeep
+
+services:
+  karakeep:
+    container_name: karakeep
+    image: ghcr.io/karakeep-app/karakeep:release
+    restart: unless-stopped
+    depends_on:
+      - chrome
+      - meilisearch
+    security_opt:
+      - no-new-privileges:true
+    env_file: # Passwords and Secrets only file
+      - $DOCKER_SECRETS_DIR/karakeep_secrets
+      - $DOCKER_SECRETS_DIR/meilisearch_secrets
+    environment: # General configurations
+      - TZ=$TZ
+      - DATA_DIR=/data  # ! DON'T CHANGE THIS
+      - DISABLE_SIGNUPS=true
+      - NEXTAUTH_URL=https://karakeep.homeserver.lukan.rocks
+      - MEILI_ADDR=http://meilisearch:7700
+      - BROWSER_WEB_URL=http://chrome:9222
+      # - OPENAI_API_KEY= look ollama implementation
+    volumes:
+      - $DOCKER_DATA_DIR/karakeep:/data
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.karakeep-router.rule=Host(`karakeep.homeserver.lukan.rocks`)
+      - traefik.http.routers.karakeep-router.entrypoints=web,websecure
+      - traefik.http.routers.karakeep-router.tls=true
+      - traefik.http.routers.karakeep-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.karakeep-router.service=karakeep-services
+      - traefik.http.services.karakeep-services.loadbalancer.server.port=3000
+
+  chrome:
+    container_name: karakeep-chrome
+    image: gcr.io/zenika-hub/alpine-chrome:123
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik-proxy
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+
+  meilisearch:
+    container_name: karakeep-meilisearch
+    image: getmeili/meilisearch:v1.11.1
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    env_file: # Passwords and Secrets only file
+      - $DOCKER_SECRETS_DIR/meilisearch_secrets
+    environment: # General configurations
+      - MEILI_NO_ANALYTICS=true
+    volumes:
+      - $DOCKER_DATA_DIR/meilisearch:/meili_data
+    networks:
+      - traefik-proxy

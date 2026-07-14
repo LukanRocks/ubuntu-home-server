@@ -1,34 +1,21 @@
-# Traefik handles the reverse proxy and certificates validation.
+# Traefik handles the reverse proxy and certificates validation. - https://doc.traefik.io/traefik/
 
 services:
   traefik:
     container_name: traefik
     image: docker.io/library/traefik:latest
     restart: unless-stopped
-    env_file: $DOCKER_SECRETS_DIR/traefik.env
+    network_mode: host
     security_opt:
       - no-new-privileges:true
+    env_file: # Passwords and Secrets only file
+      - $DOCKER_SECRETS_DIR/traefik_secrets
     volumes:
-      # Docker Network access.
-      # * :ro - Read Only.
       - $DOCKER_SOCK_DIR:ro
-
-      # Local Time.
-      # * :rw - Read and Only.
-      - $DOCKER_LOCAL_DIR
-
-      # Configuration file.
-      # * :ro - Read Only.
+      - $DOCKER_LOCAL_DIR:ro
       - $DOCKER_CONFIG_DIR/traefik/config.yaml:/etc/traefik/traefik.yaml:ro
-
-      # LetsEncrypt persistant data.
-      # * :rw - Read and Write.
       - $DOCKER_DATA_DIR/letsencrypt:/letsencrypt:rw
-
-      # Logs.
-      # * :rw - Read and Write.
       - $DOCKER_LOGS_DIR/traefik:/var/log/traefik:rw
-    network_mode: host
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)

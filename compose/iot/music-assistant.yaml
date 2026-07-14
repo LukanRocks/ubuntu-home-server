@@ -1,22 +1,18 @@
-# Home Assistant allows me to manage all things IoT and home automation.
+# Music Assistant is a media library manager that connects streaming services to connected speakers. - https://www.music-assistant.io/installation/
+
 services:
   music-assistant-server:
     container_name: music-assistant-server
     image: ghcr.io/music-assistant/server:latest
     restart: unless-stopped
-    security_opt:
-      - apparmor:unconfined
-    volumes:
-      # Persistant data.
-      # * :rw - Read and Write.
-      - $DOCKER_DATA_DIR/music-assistant-server:/data/:rw
-    cap_add:
-      - SYS_ADMIN
-      - DAC_READ_SEARCH
-    environment:
-      - TZ=$TZ
     privileged: true
     network_mode: host
+    security_opt:
+      - apparmor:unconfined
+    environment:
+      - TZ=$TZ
+    volumes:
+      - $DOCKER_DATA_DIR/music-assistant-server:/data/:rw
     # labels:
       # - traefik.enable=true
       # - traefik.http.routers.homeassistant-router.rule=Host(`ma.homeserver.lukan.rocks`)
@@ -25,3 +21,6 @@ services:
       # - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt
       # - traefik.http.routers.homeassistant-router.service=homeassistant-services
       # - traefik.http.services.homeassistant-services.loadbalancer.server.port=8123
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
