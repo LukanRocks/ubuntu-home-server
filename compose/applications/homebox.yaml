@@ -1,4 +1,6 @@
-# Homebox allows to keep track of all my stuff.
+# @ Homebox allows to keep track of all my stuff.
+# # https://homebox.software/en/quick-start/
+
 services:
   homebox:
     container_name: homebox
@@ -8,12 +10,16 @@ services:
       - no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/homebox:/data:rw
-    environment:
+    env_file: # Passowrd and Secrets only file
+      - $DOCKER_SECRETS_DIR/homebox_secrets # Provides HBOX_AUTH_API_KEY_PEPPER. Required. Server-side secret HMAC-keyed into stored API key hashes; the binary refuses to start if this is shorter than 32 bytes. Generate with openssl rand -base64 48. Must stay stable across restarts — rotating it invalidates every issued API key.
+    environment: # General configurations
       - TZ=$TZ
-      - HBOX_MODE="production"
+      - HBOX_MODE=production
+      - HBOX_OPTIONS_ALLOW_ANALYTICS=false
       - HBOX_OPTIONS_ALLOW_REGISTRATION=false
       - HBOX_OPTIONS_AUTO_INCREMENT_ASSET_ID=true
-      - HBOX_LOG_LEVEL="warn" # trace, debug, info, warn, error, critical
+      - HBOX_OPTIONS_TRUST_PROXY=true
+      - HBOX_LOG_LEVEL=warn # trace, debug, info, warn, error, critical
     networks:
       - traefik-proxy
     labels:
