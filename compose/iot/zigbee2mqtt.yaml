@@ -19,7 +19,7 @@ services:
       # * :rw - Read and Write.
       - $DOCKER_LOGS_DIR/zigbee2mqtt:/app/data/log:rw
     depends_on:
-      - mosquitto
+      - bunkerm
     networks:
       - traefik-proxy
     labels:

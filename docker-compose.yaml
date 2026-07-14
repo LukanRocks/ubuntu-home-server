@@ -27,10 +27,10 @@ include:
   # Loki
 
   # IoT
+  - $IOT_DIR/bunkerm.yaml
   - $IOT_DIR/homeassistant.yaml
   - $IOT_DIR/music-assistant.yaml
   - $IOT_DIR/matter-server.yaml
-  - $IOT_DIR/mosquitto.yaml
   - $IOT_DIR/zigbee2mqtt.yaml
 
   # Applications

@@ -1,0 +1,30 @@
+services:
+  bunkerm:
+    container_name: bunkerm
+    image: bunkeriot/bunkerm:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/bunkerm:/var/lib/mosquitto
+      - $DOCKER_DATA_DIR/bunkerm/auth:/data
+      - $DOCKER_DATA_DIR/bunkerm/mosquitto:/etc/mosquitto
+    ports:
+    # Keep for the MQTT connections to happen directly instead of hopping though traefik while the web interface is served with DNS
+      - '1883:1900'
+      - '2000:2000'
+      - '1900:1900'
+    environment:
+      - HOST_ADDRESS=172.18.0.100
+    networks:
+      traefik-proxy:
+        ipv4_address: 172.18.0.100 # fixed ip to be easily targeted
+    labels:
+      - com.centurylinklabs.watchtower.enable=false
+      - traefik.enable=true
+      - traefik.http.routers.bunkerm-router.rule=Host(`bunkerm.homeserver.lukan.rocks`)
+      - traefik.http.routers.bunkerm-router.entrypoints=web,websecure
+      - traefik.http.routers.bunkerm-router.tls=true
+      - traefik.http.routers.bunkerm-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.bunkerm-router.service=bunkerm-web-ui-service
+      - traefik.http.services.bunkerm-web-ui-service.loadbalancer.server.port=2000
