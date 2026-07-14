@@ -27,6 +27,7 @@ include:
   # Loki
 
   # IoT
+  - $IOT_DIR/dynsec-admin.yaml
   - $IOT_DIR/homeassistant.yaml
   - $IOT_DIR/music-assistant.yaml
   - $IOT_DIR/matter-server.yaml

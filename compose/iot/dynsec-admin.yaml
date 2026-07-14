@@ -1,0 +1,22 @@
+# MQTT broker + dynamic security web admin
+services:
+  dynsec-admin:
+    container_name: dynsec-admin
+    image: zivillian/dynamic-security-admin:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - MQTTSERVER=mosquitto # resolves via the shared 'mqtt' network, port is fixed at 1883
+    depends_on:
+      - mosquitto
+    networks:
+      - traefik-proxy
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.routers.dynsec-admin-router.rule=Host(`mqtt-admin.homeserver.lukan.rocks`)
+      - traefik.http.routers.dynsec-admin-router.entrypoints=web,websecure
+      - traefik.http.routers.dynsec-admin-router.tls=true
+      - traefik.http.routers.dynsec-admin-router.tls.certresolver=letsencrypt
+      - traefik.http.services.dynsec-admin-service.loadbalancer.server.port=80

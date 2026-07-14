@@ -1,8 +1,4 @@
 # Mosquitto is used as my local MQTT broker
-secrets:
-  mosquitto_broker:
-    file: $DOCKER_SECRETS_DIR/mosquitto_broker
-
 services:
   mosquitto:
     container_name: mosquitto
@@ -13,21 +9,20 @@ services:
     volumes:
       # Configuration Files.
       # * :rw - Read and Write.
-      - $DOCKER_CONFIG_DIR/mosquitto:/mosquitto/config:rw
+      - $DOCKER_DATA_DIR/mosquitto/config:/mosquitto/config:rw
       
       # Persistant data.
       # * :rw - Read and Write.
-      - $DOCKER_DATA_DIR/mosquitto:/mosquitto/data:rw
+      - $DOCKER_DATA_DIR/mosquitto/data:/mosquitto/data:rw
 
       # Logs.
       # * :rw - Read and Write.
       - $DOCKER_LOGS_DIR/mosquitto:/mosquitto/log:rw
-    secrets:
-      - mosquitto_broker
     networks:
       traefik-proxy:
-        ipv4_address: 172.18.0.100 # fixed ip to be easily targeted
+        ipv4_address: 172.18.0.100 # fixed ip to be easily targeted | Maybe is unecessary, review later
     ports:
       - 1883:1883
     labels:
       - com.centurylinklabs.watchtower.enable=false
+      - traefik.enable=false
