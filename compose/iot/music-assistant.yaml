@@ -3,7 +3,7 @@
 services:
   music-assistant-server:
     container_name: music-assistant-server
-    image: ghcr.io/music-assistant/server:latest
+    image: ghcr.io/music-assistant/server:2.9.8
     restart: unless-stopped
     privileged: true
     network_mode: host

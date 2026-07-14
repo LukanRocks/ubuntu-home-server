@@ -3,7 +3,7 @@
 services:
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:latest
+    image: portainer/portainer-ce:2.39.5
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true

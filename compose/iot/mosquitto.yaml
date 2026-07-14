@@ -3,7 +3,7 @@
 services:
   mosquitto:
     container_name: mosquitto
-    image: eclipse-mosquitto:latest
+    image: eclipse-mosquitto:2.1.2-alpine
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
