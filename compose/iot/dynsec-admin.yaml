@@ -15,7 +15,7 @@ services:
       - traefik-proxy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.dynsec-admin-router.rule=Host(`mqtt-admin.homeserver.lukan.rocks`)
+      - traefik.http.routers.dynsec-admin-router.rule=Host(`mqtt.homeserver.lukan.rocks`)
       - traefik.http.routers.dynsec-admin-router.entrypoints=web,websecure
       - traefik.http.routers.dynsec-admin-router.tls=true
       - traefik.http.routers.dynsec-admin-router.tls.certresolver=letsencrypt
