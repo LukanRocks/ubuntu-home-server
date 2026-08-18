@@ -1,7 +1,7 @@
 services:
   bambuddy:
     container_name: bambuddy
-    image: ghcr.io/maziggy/bambuddy:1.2.5.2
+    image: ghcr.io/maziggy/bambuddy:1.2.5.3
     restart: unless-stopped
     network_mode: host  # Recommended for automatic printer discovery
     security_opt:
