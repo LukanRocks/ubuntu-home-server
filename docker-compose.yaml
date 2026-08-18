@@ -12,13 +12,14 @@ networks:
 # TODO: Create a script that auto generates the include paths
 include:
   # Applications
-  - $APPLICATIONS_DIR/bambuddy.yaml # Local manage Excalidraw app
+  - $APPLICATIONS_DIR/bambuddy.yaml # 3D printer manager
   - $APPLICATIONS_DIR/excalihome.yaml # Local manage Excalidraw app
   - $APPLICATIONS_DIR/homebox.yaml # Asset organization tool
   - $APPLICATIONS_DIR/karakeep.yaml # Bookmark management tool
   - $APPLICATIONS_DIR/tally.yaml # Board games management tool
 
   # Infrastructure
+  - $INFRASTRUCTURE_DIR/bark.yaml # iOS notification server
   - $INFRASTRUCTURE_DIR/portainer.yaml # Docker management UI
   - $INFRASTRUCTURE_DIR/traefik.yaml # Domain routing, reverse proxy and certificate manager
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring

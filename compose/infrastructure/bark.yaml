@@ -1,0 +1,20 @@
+# iOS notification server
+services:
+  bark:
+    container_name: bark
+    image: ghcr.io/finb/bark-server:v2.3.5
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/bark:/data
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.bark-router.rule=Host(`bark.homeserver.lukan.rocks`)
+      - traefik.http.routers.bark-router.entrypoints=web,websecure
+      - traefik.http.routers.bark-router.tls=true
+      - traefik.http.routers.bark-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.bark-router.service=bark-services
+      - traefik.http.services.bark-services.loadbalancer.server.port=8080
