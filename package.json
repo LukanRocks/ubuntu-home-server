@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "up": "docker compose up -d --remove-orphans",
+        "down": "docker compose down --remove-orphans",
+        "restart": "docker compose restart --remove-orphans",
+        "update": "docker compose pull && docker compose up -d --remove-orphans"
+    }
+}

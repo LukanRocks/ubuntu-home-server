@@ -1,0 +1,26 @@
+services:
+  zone-configurator:
+    container_name: zone-configurator
+    image: everythingsmarthome/everything-presence-mmwave-configurator:2.2.4
+    restart: unless-stopped
+    depends_on:
+      - homeassistant
+    security_opt:
+      - no-new-privileges:true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      HA_BASE_URL: "http://host.docker.internal:8123"
+      HA_LONG_LIVED_TOKEN: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5NTQxYTZhN2Y5NTQ0MmMwYWZkNTZjMmUwMzg4MWRkZCIsImlhdCI6MTc4NjEwMjA2NiwiZXhwIjoyMTAxNDYyMDY2fQ.15THq7LegbgyJfJ1MSEDAMUY2jn-uH9tbcH_5msnOfg"
+    volumes:
+      - $DOCKER_DATA_DIR/zone-configurator:/config
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.everythingsmarthome-router.rule=Host(`esh.homeserver.lukan.rocks`)
+      - traefik.http.routers.everythingsmarthome-router.entrypoints=web,websecure
+      - traefik.http.routers.everythingsmarthome-router.tls=true
+      - traefik.http.routers.everythingsmarthome-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.everythingsmarthome-router.service=everythingsmarthome-services
+      - traefik.http.services.everythingsmarthome-services.loadbalancer.server.port=42069

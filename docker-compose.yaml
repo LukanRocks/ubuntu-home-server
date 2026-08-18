@@ -12,6 +12,7 @@ networks:
 # TODO: Create a script that auto generates the include paths
 include:
   # Applications
+  - $APPLICATIONS_DIR/bambuddy.yaml # Local manage Excalidraw app
   - $APPLICATIONS_DIR/excalihome.yaml # Local manage Excalidraw app
   - $APPLICATIONS_DIR/homebox.yaml # Asset organization tool
   - $APPLICATIONS_DIR/karakeep.yaml # Bookmark management tool
@@ -29,3 +30,4 @@ include:
   - $IOT_DIR/mosquitto.yaml # Local MQTT broker
   - $IOT_DIR/music-assistant.yaml # Centralize media manager
   - $IOT_DIR/zigbee2mqtt.yaml # Zigbee coordinator
+  - $IOT_DIR/zone-configurator.yaml # Everything Smart Home mmWave Manager

@@ -1,0 +1,22 @@
+services:
+  bambuddy:
+    container_name: bambuddy
+    image: ghcr.io/maziggy/bambuddy:1.2.5.2
+    restart: unless-stopped
+    network_mode: host  # Recommended for automatic printer discovery
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=$TZ
+    build: .
+    volumes:
+      - $DOCKER_DATA_DIR/bambuddy:/app/data
+      - $DOCKER_LOGS_DIR/bambuddy:/app/logs
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.bambuddy-router.rule=Host(`bambuddy.homeserver.lukan.rocks`)
+      - traefik.http.routers.bambuddy-router.entrypoints=web,websecure
+      - traefik.http.routers.bambuddy-router.tls=true
+      - traefik.http.routers.bambuddy-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.bambuddy-router.service=bambuddy-services
+      - traefik.http.services.bambuddy-services.loadbalancer.server.port=8000
