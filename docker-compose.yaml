@@ -20,6 +20,7 @@ include:
 
   # Infrastructure
   - $INFRASTRUCTURE_DIR/bark.yaml # iOS notification server
+  - $INFRASTRUCTURE_DIR/cups.yaml # Printer management and airport
   - $INFRASTRUCTURE_DIR/portainer.yaml # Docker management UI
   - $INFRASTRUCTURE_DIR/traefik.yaml # Domain routing, reverse proxy and certificate manager
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring

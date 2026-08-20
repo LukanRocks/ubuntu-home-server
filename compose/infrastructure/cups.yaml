@@ -1,0 +1,25 @@
+# Printer management
+
+services:
+  cups:
+    container_name: cups
+    image: chuckcharlie/cups-avahi-airprint:latest
+    restart: unless-stopped
+    network_mode: host # required: AirPrint discovery needs multicast/mDNS on the LAN
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKER_DATA_DIR/cups:/config
+    env_file: # Passowrd and Secrets only file
+      - $DOCKER_SECRETS_DIR/cups
+    environment:
+      AVAHI_HOSTNAME: "cups-airprint"
+      TZ: $TZ
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.cups-router.rule=Host(`cups.homeserver.lukan.rocks`)
+      - traefik.http.routers.cups-router.entrypoints=web,websecure
+      - traefik.http.routers.cups-router.tls=true
+      - traefik.http.routers.cups-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.cups-router.service=cups-services
+      - traefik.http.services.cups-services.loadbalancer.server.port=631
