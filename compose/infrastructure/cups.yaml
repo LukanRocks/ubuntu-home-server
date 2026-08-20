@@ -13,13 +13,12 @@ services:
     env_file: # Passowrd and Secrets only file
       - $DOCKER_SECRETS_DIR/cups
     environment:
-      AVAHI_HOSTNAME: "cups-airprint"
       TZ: $TZ
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.cups-router.rule=Host(`cups.homeserver.lukan.rocks`)
-      - traefik.http.routers.cups-router.entrypoints=web,websecure
-      - traefik.http.routers.cups-router.tls=true
-      - traefik.http.routers.cups-router.tls.certresolver=letsencrypt
-      - traefik.http.routers.cups-router.service=cups-services
-      - traefik.http.services.cups-services.loadbalancer.server.port=631
+    # labels:
+    #   - traefik.enable=true
+    #   - traefik.http.routers.cups-router.rule=Host(`cups.homeserver.lukan.rocks`)
+    #   - traefik.http.routers.cups-router.entrypoints=web,websecure
+    #   - traefik.http.routers.cups-router.tls=true
+    #   - traefik.http.routers.cups-router.tls.certresolver=letsencrypt
+    #   - traefik.http.routers.cups-router.service=cups-services
+    #   - traefik.http.services.cups-services.loadbalancer.server.port=631

@@ -24,5 +24,3 @@ services:
       - traefik.http.routers.traefik-router.tls.certresolver=letsencrypt
       - traefik.http.routers.traefik-router.service=api@internal
       - traefik.http.services.api@internal.loadbalancer.server.port=8080
-    extra_hosts:
-      - host.docker.internal:host-gateway # required for cups to work
