@@ -26,10 +26,9 @@ include:
   - $INFRASTRUCTURE_DIR/uptimekuma.yaml # Uptime monitoring
 
   # IoT
-  - $IOT_DIR/dynsec-admin.yaml # MQTT dynamic security admin web interface
+  - $IOT_DIR/easy-mqtt.yaml # Local MQTT broker with dynasec UI
   - $IOT_DIR/homeassistant.yaml # Home automation powerhouse
   - $IOT_DIR/matter-server.yaml # Local Matter broker
-  - $IOT_DIR/mosquitto.yaml # Local MQTT broker
-  - $IOT_DIR/music-assistant.yaml # Centralize media manager
+  # - $IOT_DIR/music-assistant.yaml # Centralize media manager
   - $IOT_DIR/zigbee2mqtt.yaml # Zigbee coordinator
   - $IOT_DIR/zone-configurator.yaml # Everything Smart Home mmWave Manager

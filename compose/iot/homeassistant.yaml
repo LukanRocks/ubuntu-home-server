@@ -6,7 +6,7 @@ services:
     image: ghcr.io/home-assistant/home-assistant:2026.8
     restart: unless-stopped
     depends_on:
-      - mosquitto
+      - easy-mqtt
       - zigbee2mqtt
     privileged: true
     network_mode: host
@@ -27,4 +27,4 @@ services:
       - traefik.http.routers.homeassistant-router.service=homeassistant-services
       - traefik.http.services.homeassistant-services.loadbalancer.server.port=8123
     extra_hosts:
-      - mosquitto:172.18.0.100
+      - easy-mqtt:172.18.0.100

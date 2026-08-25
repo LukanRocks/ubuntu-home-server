@@ -1,0 +1,28 @@
+# MQTT Broker with nice UI
+
+services:
+  easy-mqtt:
+    container_name: easy-mqtt
+    image: ghcr.io/lukanrocks/easy-mqtt:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      DYNSEC_ADMIN_USER: admin # Admin account created on first run.
+      DYNSEC_ADMIN_PASSWORD: e0lfZLC[Zo.jsPmV5U8I
+      COOKIE_SECURE: 'true'
+    volumes:
+      - $DOCKER_DATA_DIR/easy-mqtt:/data
+    networks:
+      traefik-proxy:
+        ipv4_address: 172.18.0.100 # fixed ip to be easily targeted | Maybe is unecessary, review later
+    ports:
+      - 1883:1883
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.easy-mqtt-router.rule=Host(`mqtt.homeserver.lukan.rocks`)
+      - traefik.http.routers.easy-mqtt-router.entrypoints=web,websecure
+      - traefik.http.routers.easy-mqtt-router.tls=true
+      - traefik.http.routers.easy-mqtt-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.easy-mqtt-router.service=easy-mqtt-services
+      - traefik.http.services.easy-mqtt-services.loadbalancer.server.port=80

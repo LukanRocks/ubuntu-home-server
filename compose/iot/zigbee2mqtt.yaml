@@ -6,7 +6,7 @@ services:
     image: koenkk/zigbee2mqtt:2.12.1
     restart: unless-stopped
     depends_on:
-      - mosquitto
+      - easy-mqtt
     security_opt:
       - no-new-privileges:true
     volumes:
