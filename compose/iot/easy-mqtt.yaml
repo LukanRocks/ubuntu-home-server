@@ -8,8 +8,6 @@ services:
     security_opt:
       - no-new-privileges:true
     environment:
-      DYNSEC_ADMIN_USER: admin # Admin account created on first run.
-      DYNSEC_ADMIN_PASSWORD: e0lfZLC[Zo.jsPmV5U8I
       COOKIE_SECURE: 'true'
     volumes:
       - $DOCKER_DATA_DIR/easy-mqtt:/data
