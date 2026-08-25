@@ -1,0 +1,26 @@
+# Dashboard that monitors your GitHub repositories
+
+services:
+  github-visualize:
+    container_name: github-visualize
+    image: akitaonrails/github-visualize:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    env_file: $DOCKER_SECRETS_DIR/github_visualize_secrets
+    environment:
+      - APP_TIME_ZONE=$TZ
+      - SOLID_QUEUE_IN_PUMA=1
+      - GITHUB_OWNER=LukanRocks
+    volumes:
+      - $DOCKER_DATA_DIR/github-visualize:/rails/storage
+    networks:
+      - traefik-proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.github-visualize-router.rule=Host(`ghv.homeserver.lukan.rocks`)
+      - traefik.http.routers.github-visualize-router.entrypoints=web,websecure
+      - traefik.http.routers.github-visualize-router.tls=true
+      - traefik.http.routers.github-visualize-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.github-visualize-router.service=github-visualize-services
+      - traefik.http.services.github-visualize-services.loadbalancer.server.port=80
