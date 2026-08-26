@@ -7,8 +7,7 @@ services:
     restart: unless-stopped
     depends_on:
       - easy-mqtt
-    security_opt:
-      - no-new-privileges:true
+    security_opt: no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/zigbee2mqtt:/app/data:rw
       - $DOCKER_LOCAL_DIR:ro

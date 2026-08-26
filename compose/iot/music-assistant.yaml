@@ -5,10 +5,11 @@ services:
     container_name: music-assistant-server
     image: ghcr.io/music-assistant/server:2.9.8
     restart: unless-stopped
+    depends_on:
+      - homeassistant
     privileged: true
     network_mode: host
-    security_opt:
-      - apparmor:unconfined
+    security_opt: apparmor:unconfined
     environment:
       - TZ=$TZ
     volumes:

@@ -6,8 +6,7 @@ services:
     image: chuckcharlie/cups-avahi-airprint:latest
     restart: unless-stopped
     network_mode: host # required: AirPrint discovery needs multicast/mDNS on the LAN
-    security_opt:
-      - no-new-privileges:true
+    security_opt: no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/cups:/config
     env_file: # Passowrd and Secrets only file

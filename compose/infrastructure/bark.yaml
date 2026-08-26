@@ -5,8 +5,7 @@ services:
     container_name: bark
     image: ghcr.io/finb/bark-server:v2.3.5
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
+    security_opt: no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/bark:/data
     networks:

@@ -6,8 +6,7 @@ services:
     image: ghcr.io/home-assistant-libs/python-matter-server:8.1.0
     restart: unless-stopped
     network_mode: host
-    security_opt:
-      - apparmor=unconfined
+    security_opt: apparmor=unconfined
     volumes:
       - $DOCKER_DATA_DIR/matter-server:/data:rw
       - $DOCKER_SOCK_DIR:ro

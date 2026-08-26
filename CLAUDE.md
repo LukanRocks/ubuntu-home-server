@@ -27,10 +27,8 @@ services:
     restart: unless-stopped
     depends_on:
       - service-name
-    security_opt:
-      - no-new-privileges:true
-    env_file: # secrets only
-      - $DOCKER_SECRETS_DIR/service-name_secrets
+    security_opt: no-new-privileges:true
+    env_file: $DOCKER_SECRETS_DIR/service-name_secrets
     environment: # non-secret config only
       - TZ=$TZ
       - SOME_OPTION=value

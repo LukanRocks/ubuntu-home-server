@@ -5,8 +5,7 @@ services:
     container_name: tally
     image: ghcr.io/lukanrocks/tally:latest
     restart: unless-stopped
-    security_opt:
-      - no-new-privileges:true
+    security_opt: no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/tally:/app/data:rw
     networks:
