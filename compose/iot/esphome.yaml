@@ -1,0 +1,24 @@
+# Manage ESPhome devices
+
+services:
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    security_opt:
+      - no-new-privileges:true
+    env_file: $DOCKER_SECRETS_DIR/esphome
+    volumes:
+      - $DOCKER_DATA_DIR/esphome:/config:rw
+      - $DOCKER_LOCAL_DIR:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.esphome-router.rule=Host(`esphome.homeserver.lukan.rocks`)
+      - traefik.http.routers.esphome-router.entrypoints=web,websecure
+      - traefik.http.routers.esphome-router.tls=true
+      - traefik.http.routers.esphome-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.esphome-router.service=esphome-services
+      - traefik.http.services.esphome-services.loadbalancer.server.port=6052
+    

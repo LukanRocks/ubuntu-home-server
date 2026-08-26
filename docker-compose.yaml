@@ -28,6 +28,7 @@ include:
 
   # IoT
   - $IOT_DIR/easy-mqtt.yaml # Local MQTT broker with dynasec UI
+  - $IOT_DIR/esphome.yaml # Manage ESPhome devices
   - $IOT_DIR/homeassistant.yaml # Home automation powerhouse
   - $IOT_DIR/matter-server.yaml # Local Matter broker
   # - $IOT_DIR/music-assistant.yaml # Centralize media manager
