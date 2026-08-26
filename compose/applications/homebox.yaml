@@ -5,7 +5,8 @@ services:
     container_name: homebox
     image: ghcr.io/sysadminsmedia/homebox:0.26.2
     restart: unless-stopped
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     env_file: # Passowrd and Secrets only file
       - $DOCKER_SECRETS_DIR/homebox_secrets # Provides HBOX_AUTH_API_KEY_PEPPER. Required. Server-side secret HMAC-keyed into stored API key hashes; the binary refuses to start if this is shorter than 32 bytes. Generate with openssl rand -base64 48. Must stay stable across restarts — rotating it invalidates every issued API key.
     environment: # General configurations
@@ -18,7 +19,8 @@ services:
       - HBOX_LOG_LEVEL=warn # trace, debug, info, warn, error, critical
     volumes:
       - $DOCKER_DATA_DIR/homebox:/data:rw
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.homebox-router.rule=Host(`homebox.homeserver.lukan.rocks`)

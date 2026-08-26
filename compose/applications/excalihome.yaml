@@ -5,10 +5,12 @@ services:
     container_name: excalihome
     image: ghcr.io/lukanrocks/excalihome:latest
     restart: unless-stopped
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/excalihome:/app/data:rw
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.excalihome-router.rule=Host(`excalihome.homeserver.lukan.rocks`)

@@ -8,7 +8,8 @@ services:
     depends_on:
       - chrome
       - meilisearch
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     env_file: # Passwords and Secrets only file
       - $DOCKER_SECRETS_DIR/karakeep_secrets
       - $DOCKER_SECRETS_DIR/meilisearch_secrets
@@ -22,7 +23,8 @@ services:
       # - OPENAI_API_KEY= look ollama implementation
     volumes:
       - $DOCKER_DATA_DIR/karakeep:/data
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.karakeep-router.rule=Host(`karakeep.homeserver.lukan.rocks`)
@@ -36,8 +38,10 @@ services:
     container_name: karakeep-chrome
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
-    security_opt: no-new-privileges:true
-    networks: traefik-proxy
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - traefik-proxy
     command:
       - --no-sandbox
       - --disable-gpu
@@ -50,11 +54,13 @@ services:
     container_name: karakeep-meilisearch
     image: getmeili/meilisearch:v1.11.1
     restart: unless-stopped
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     env_file: # Passwords and Secrets only file
       - $DOCKER_SECRETS_DIR/meilisearch_secrets
     environment: # General configurations
       - MEILI_NO_ANALYTICS=true
     volumes:
       - $DOCKER_DATA_DIR/meilisearch:/meili_data
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy

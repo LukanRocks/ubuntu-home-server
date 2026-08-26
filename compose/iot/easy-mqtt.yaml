@@ -5,7 +5,8 @@ services:
     container_name: easy-mqtt
     image: ghcr.io/lukanrocks/easy-mqtt:latest
     restart: unless-stopped
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     environment:
       COOKIE_SECURE: 'true'
     volumes:

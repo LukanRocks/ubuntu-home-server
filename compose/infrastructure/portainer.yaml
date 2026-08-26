@@ -5,13 +5,15 @@ services:
     container_name: portainer
     image: portainer/portainer-ce:2.39.5
     restart: unless-stopped
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     environment:
       - TZ=$TZ
     volumes:
       - $DOCKER_SOCK_DIR:rw
       - $DOCKER_DATA_DIR/portainer:/data:rw
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.portainer-router.rule=Host(`portainer.homeserver.lukan.rocks`)

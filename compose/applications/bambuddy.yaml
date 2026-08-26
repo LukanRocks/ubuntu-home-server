@@ -4,7 +4,8 @@ services:
     image: ghcr.io/maziggy/bambuddy:1.2.5.3
     restart: unless-stopped
     network_mode: host  # Recommended for automatic printer discovery
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     environment:
       - TZ=$TZ
     build: .

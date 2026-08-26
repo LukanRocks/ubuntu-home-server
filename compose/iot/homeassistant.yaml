@@ -11,7 +11,8 @@ services:
       - matter-server
     privileged: true
     network_mode: host
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     environment:
       - TZ=$TZ
     volumes:

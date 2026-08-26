@@ -27,14 +27,16 @@ services:
     restart: unless-stopped
     depends_on:
       - service-name
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     env_file: $DOCKER_SECRETS_DIR/service-name_secrets
     environment: # non-secret config only
       - TZ=$TZ
       - SOME_OPTION=value
     volumes:
       - $DOCKER_DATA_DIR/service-name:/data:rw
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.service-name-router.rule=Host(`service-name.homeserver.lukan.rocks`)

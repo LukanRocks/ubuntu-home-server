@@ -5,12 +5,14 @@ services:
     container_name: uptimekuma
     image: louislam/uptime-kuma:1.23.17
     restart: unless-stopped
-    security_opt: no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     environment:
       - TZ=$TZ
     volumes:
       - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
-    networks: traefik-proxy
+    networks:
+      - traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)

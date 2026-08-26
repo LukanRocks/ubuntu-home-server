@@ -5,12 +5,15 @@ services:
     restart: unless-stopped
     depends_on:
       - homeassistant
-    security_opt: no-new-privileges:true
-    env_file: $DOCKER_SECRETS_DIR/esphome
+    security_opt:
+      - no-new-privileges:true
+    env_file: $DOCKER_SECRETS_DIR/esm_zone_configurator
     volumes:
       - $DOCKER_DATA_DIR/zone-configurator:/config
-    networks: traefik-proxy
-    extra_hosts: host.docker.internal:host-gateway
+    networks:
+      - traefik-proxy
+    extra_hosts:
+      - host.docker.internal:host-gateway
     labels:
       - traefik.enable=true
       - traefik.http.routers.everythingsmarthome-router.rule=Host(`esh.homeserver.lukan.rocks`)
