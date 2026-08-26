@@ -16,12 +16,12 @@ services:
       - $DOCKER_DATA_DIR/music-assistant-server:/data/:rw
     # labels:
       # - traefik.enable=true
-      # - traefik.http.routers.homeassistant-router.rule=Host(`ma.homeserver.lukan.rocks`)
-      # - traefik.http.routers.homeassistant-router.entrypoints=web,websecure
-      # - traefik.http.routers.homeassistant-router.tls=true
-      # - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt
-      # - traefik.http.routers.homeassistant-router.service=homeassistant-services
-      # - traefik.http.services.homeassistant-services.loadbalancer.server.port=8123
+      # - traefik.http.routers.musicassistant-router.rule=Host(`ma.homeserver.lukan.rocks`)
+      # - traefik.http.routers.musicassistant-router.entrypoints=web,websecure
+      # - traefik.http.routers.musicassistant-router.tls=true
+      # - traefik.http.routers.musicassistant-router.tls.certresolver=letsencrypt
+      # - traefik.http.routers.musicassistant-router.service=musicassistant-services
+      # - traefik.http.services.musicassistant-services.loadbalancer.server.port=8123
     cap_add:
       - SYS_ADMIN
       - DAC_READ_SEARCH
