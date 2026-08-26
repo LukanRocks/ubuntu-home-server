@@ -13,8 +13,7 @@ services:
       - GITHUB_OWNER=LukanRocks
     volumes:
       - $DOCKER_DATA_DIR/github-visualize:/rails/storage
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.github-visualize-router.rule=Host(`ghv.homeserver.lukan.rocks`)

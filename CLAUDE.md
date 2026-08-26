@@ -34,8 +34,7 @@ services:
       - SOME_OPTION=value
     volumes:
       - $DOCKER_DATA_DIR/service-name:/data:rw
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.service-name-router.rule=Host(`service-name.homeserver.lukan.rocks`)

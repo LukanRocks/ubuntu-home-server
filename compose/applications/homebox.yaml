@@ -18,8 +18,7 @@ services:
       - HBOX_LOG_LEVEL=warn # trace, debug, info, warn, error, critical
     volumes:
       - $DOCKER_DATA_DIR/homebox:/data:rw
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.homebox-router.rule=Host(`homebox.homeserver.lukan.rocks`)

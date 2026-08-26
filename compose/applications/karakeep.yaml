@@ -22,8 +22,7 @@ services:
       # - OPENAI_API_KEY= look ollama implementation
     volumes:
       - $DOCKER_DATA_DIR/karakeep:/data
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.karakeep-router.rule=Host(`karakeep.homeserver.lukan.rocks`)
@@ -38,8 +37,7 @@ services:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
     security_opt: no-new-privileges:true
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     command:
       - --no-sandbox
       - --disable-gpu
@@ -59,5 +57,4 @@ services:
       - MEILI_NO_ANALYTICS=true
     volumes:
       - $DOCKER_DATA_DIR/meilisearch:/meili_data
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy

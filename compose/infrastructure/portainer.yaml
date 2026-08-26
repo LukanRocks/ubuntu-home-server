@@ -11,8 +11,7 @@ services:
     volumes:
       - $DOCKER_SOCK_DIR:rw
       - $DOCKER_DATA_DIR/portainer:/data:rw
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.portainer-router.rule=Host(`portainer.homeserver.lukan.rocks`)

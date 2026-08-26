@@ -8,8 +8,7 @@ services:
     security_opt: no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/bark:/data
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.bark-router.rule=Host(`bark.homeserver.lukan.rocks`)

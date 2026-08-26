@@ -8,8 +8,7 @@ services:
     security_opt: no-new-privileges:true
     volumes:
       - $DOCKER_DATA_DIR/tally:/app/data:rw
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.tally-router.rule=Host(`tally.homeserver.lukan.rocks`)

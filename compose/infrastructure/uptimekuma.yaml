@@ -10,8 +10,7 @@ services:
       - TZ=$TZ
     volumes:
       - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
-    networks:
-      - traefik-proxy
+    networks: traefik-proxy
     labels:
       - traefik.enable=true
       - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)
