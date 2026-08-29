@@ -8,10 +8,12 @@ services:
       - no-new-privileges:true
     environment:
       - TZ=$TZ
+      - BAMBUDDY_EXTERNAL_ROOTS=/external/3d-printing
     build: .
     volumes:
       - $DOCKER_DATA_DIR/bambuddy:/app/data
       - $DOCKER_LOGS_DIR/bambuddy:/app/logs
+      - $DOCKER_MOUNTS_DIR/3d-printing:/external/3d-printing
     labels:
       - traefik.enable=true
       - traefik.http.routers.bambuddy-router.rule=Host(`bambuddy.homeserver.lukan.rocks`)
