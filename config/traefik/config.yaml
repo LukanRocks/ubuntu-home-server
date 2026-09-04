@@ -10,6 +10,9 @@ log:
 # (Optional) Enable API and Dashboard here. Don't do in production.
 api: {}
 
+# Enables `traefik healthcheck --ping`, used by the compose healthcheck
+ping: {}
+
 entryPoints:
   web:
     address: :80

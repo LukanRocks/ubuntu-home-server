@@ -50,7 +50,7 @@ services:
     # anything else (command, extra labels, etc.) goes after labels
 ```
 
-Key order within a service is fixed: `container_name`, `image`, `restart`, `depends_on`, `privileged`, `network_mode`, `security_opt`, `env_file`, `environment`, `volumes`, `networks`, `healthcheck`, `labels`, then anything else the service needs. `privileged` and `network_mode` are only present when the container genuinely requires them and replace `networks` when used — a service doesn't declare both.
+Key order within a service is fixed: `container_name`, `image`, `restart`, `depends_on`, `privileged`, `network_mode`, `extra_hosts`, `security_opt`, `env_file`, `environment`, `volumes`, `networks`, `healthcheck`, `labels`, then anything else the service needs. `privileged` and `network_mode` are only present when the container genuinely requires them and replace `networks` when used — a service doesn't declare both. `extra_hosts` is only present when needed; it sits right after `network_mode`/`privileged` since it's networking-related config, whether or not the service actually uses `network_mode`.
 
 Defaults — deviate only when the container genuinely requires it or otherwise specified:
 - `restart: unless-stopped`
