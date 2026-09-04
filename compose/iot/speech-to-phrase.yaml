@@ -22,11 +22,10 @@ services:
     # Only HA will directly access
     # ports:
     #   - 10300:10300
-    # TODO: verify bash is available in this image, then enable (Wyoming is TCP-only, no HTTP)
-    # healthcheck:
-    #   test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/10300'"]
-    #   interval: 30s
-    #   timeout: 5s
-    #   start_period: 30s
-    #   retries: 3
+    healthcheck: # Wyoming is TCP-only (no HTTP)
+      test: ["CMD", "python3", "-c", "import socket; socket.create_connection(('127.0.0.1',10300),timeout=5).close()"]
+      interval: 30s
+      timeout: 10s
+      start_period: 120s # first run downloads models and trains
+      retries: 3
     entrypoint: ["bash", "/run-secure.sh"]

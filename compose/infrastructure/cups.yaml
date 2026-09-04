@@ -14,11 +14,10 @@ services:
       - TZ=$TZ
     volumes:
       - $DOCKER_DATA_DIR/cups:/config
-    # TODO: verify curl is available in this image, then enable
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:631/"]
-    #   interval: 30s
-    #   timeout: 5s
-    #   start_period: 15s
-    #   retries: 3
+    healthcheck: # image has wget, not curl
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:631/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
     # Not Traefik-routed: network_mode: host, accessed directly on the LAN at :631

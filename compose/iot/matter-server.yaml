@@ -11,10 +11,9 @@ services:
     volumes:
       - $DOCKER_DATA_DIR/matter-server:/data:rw
       - $DOCKER_SOCK_DIR:ro
-    # TODO: verify wget is available in this image and confirm the control port, then enable
-    # healthcheck:
-    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5580/"]
-    #   interval: 30s
-    #   timeout: 5s
-    #   start_period: 30s
-    #   retries: 3
+    healthcheck: # image has curl, not wget
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:5580/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3

@@ -16,13 +16,12 @@ services:
         ipv4_address: 172.18.0.100 # fixed ip to be easily targeted | Maybe is unecessary, review later
     ports:
       - 1883:1883
-    # TODO: verify wget is available in this image, then enable
-    # healthcheck:
-    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/"]
-    #   interval: 30s
-    #   timeout: 5s
-    #   start_period: 15s
-    #   retries: 3
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:80/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
     labels:
       - traefik.enable=true
       - traefik.http.routers.easy-mqtt-router.rule=Host(`mqtt.homeserver.lukan.rocks`)
