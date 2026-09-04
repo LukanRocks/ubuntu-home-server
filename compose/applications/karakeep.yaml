@@ -25,6 +25,7 @@ services:
       - $DOCKER_DATA_DIR/karakeep:/data
     networks:
       - traefik-proxy
+    # healthcheck: image ships its own (wget --spider http://127.0.0.1:3000/api/health)
     labels:
       - traefik.enable=true
       - traefik.http.routers.karakeep-router.rule=Host(`karakeep.homeserver.lukan.rocks`)
@@ -42,6 +43,12 @@ services:
       - no-new-privileges:true
     networks:
       - traefik-proxy
+    healthcheck: # 127.0.0.1, not localhost — chrome binds IPv4 only
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:9222/json/version"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
     command:
       - --no-sandbox
       - --disable-gpu
@@ -64,3 +71,9 @@ services:
       - $DOCKER_DATA_DIR/meilisearch:/meili_data
     networks:
       - traefik-proxy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7700/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3

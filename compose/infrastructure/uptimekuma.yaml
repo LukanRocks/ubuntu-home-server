@@ -13,6 +13,7 @@ services:
       - $DOCKER_DATA_DIR/uptimekuma:/app/data:rw
     networks:
       - traefik-proxy
+    # healthcheck: image ships its own (extra/healthcheck, a compiled Go binary, start_period 180s)
     labels:
       - traefik.enable=true
       - traefik.http.routers.uptimekuma-router.rule=Host(`uptimekuma.homeserver.lukan.rocks`)

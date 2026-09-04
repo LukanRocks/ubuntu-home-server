@@ -16,6 +16,12 @@ services:
       - $DOCKER_CONFIG_DIR/traefik/config.yaml:/etc/traefik/traefik.yaml:ro
       - $DOCKER_DATA_DIR/letsencrypt:/letsencrypt:rw
       - $DOCKER_LOGS_DIR/traefik:/var/log/traefik:rw
+    healthcheck: # requires `ping: {}` in config/traefik/config.yaml
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 30s
+      timeout: 10s
+      start_period: 15s
+      retries: 3
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik-router.rule=Host(`traefik.homeserver.lukan.rocks`)

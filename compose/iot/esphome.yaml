@@ -13,13 +13,7 @@ services:
     volumes:
       - $DOCKER_DATA_DIR/esphome:/config:rw
       - $DOCKER_LOCAL_DIR:ro
-    # TODO: verify wget is available in this image, then enable
-    # healthcheck:
-    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:6052/"]
-    #   interval: 30s
-    #   timeout: 5s
-    #   start_period: 30s
-    #   retries: 3
+    # healthcheck: image ships its own (curl --fail http://localhost:6052/version)
     labels:
       - traefik.enable=true
       - traefik.http.routers.esphome-router.rule=Host(`esphome.homeserver.lukan.rocks`)
