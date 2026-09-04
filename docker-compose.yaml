@@ -17,6 +17,7 @@ include:
   - $APPLICATIONS_DIR/github-visualize.yaml # Dashboard that monitors your GitHub repositories
   - $APPLICATIONS_DIR/homebox.yaml # Asset organization tool
   - $APPLICATIONS_DIR/karakeep.yaml # Bookmark management tool
+  - $APPLICATIONS_DIR/nf-price-tracker.yaml # Price tracking tool
   - $APPLICATIONS_DIR/tally.yaml # Board games management tool
 
   # Infrastructure
@@ -32,5 +33,8 @@ include:
   - $IOT_DIR/homeassistant.yaml # Home automation powerhouse
   - $IOT_DIR/matter-server.yaml # Local Matter broker
   # - $IOT_DIR/music-assistant.yaml # Centralize media manager
+  - $IOT_DIR/piper.yaml # Home Assistant Voice Piper text to speech
+  - $IOT_DIR/speech-to-phrase.yaml # Home Assistant Voice speech to text
+  - $IOT_DIR/whisper.yaml # Whisper (faster-whisper) STT (Wyoming)
   - $IOT_DIR/zigbee2mqtt.yaml # Zigbee coordinator
   - $IOT_DIR/zone-configurator.yaml # Everything Smart Home mmWave Manager
