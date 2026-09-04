@@ -11,6 +11,11 @@ services:
       - matter-server
     privileged: true
     network_mode: host
+    extra_hosts:
+      - easy-mqtt:172.18.0.100
+      - speech-to-phrase:172.18.0.101
+      - piper:172.18.0.102
+      - whisper:172.18.0.103
     security_opt:
       - no-new-privileges:true
     environment:
@@ -19,6 +24,12 @@ services:
       - $DOCKER_DATA_DIR/homeassistant:/config:rw
       - $DOCKER_LOCAL_DIR:ro
       - $DOCKER_SOCK_DIR:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8123/manifest.json || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
     labels:
       - traefik.enable=true
       - traefik.http.routers.homeassistant-router.rule=Host(`ha.homeserver.lukan.rocks`)
@@ -27,5 +38,3 @@ services:
       - traefik.http.routers.homeassistant-router.tls.certresolver=letsencrypt
       - traefik.http.routers.homeassistant-router.service=homeassistant-services
       - traefik.http.services.homeassistant-services.loadbalancer.server.port=8123
-    extra_hosts:
-      - easy-mqtt:172.18.0.100

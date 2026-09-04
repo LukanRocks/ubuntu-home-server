@@ -1,0 +1,22 @@
+# Piper — neural text-to-speech (Wyoming) for Home Assistant
+
+services:
+  piper:
+    container_name: piper
+    image: rhasspy/wyoming-piper
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=$TZ
+    volumes:
+      - $DOCKER_DATA_DIR/piper:/data   # downloaded voices
+    networks:
+      traefik-proxy:
+        ipv4_address: 172.18.0.102 # fixed ip to be easily targeted | Maybe is unecessary, review later
+    # Only HA will directly access
+    # ports:
+    #   - 10200:10200
+    command:
+      - --voice
+      - en_US-lessac-medium

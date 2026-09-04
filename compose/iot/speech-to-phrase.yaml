@@ -1,0 +1,27 @@
+# Home Assistant Voice Assist
+
+services:
+  speech-to-phrase:
+    container_name: speech-to-phrase
+    image: rhasspy/wyoming-speech-to-phrase
+    restart: unless-stopped
+    depends_on:
+      homeassistant:
+        condition: service_healthy
+    security_opt:
+      - no-new-privileges:true
+    env_file: # Passowrd and Secrets only file
+      - $DOCKER_SECRETS_DIR/speech-to-phrase
+    environment:
+      - TZ=$TZ
+    volumes:
+      - $DOCKER_DATA_DIR/speech-to-phrase/models:/models   # downloaded speech models (HuggingFace)
+      - $DOCKER_DATA_DIR/speech-to-phrase/train:/train     # generated training artifacts
+      - $DOCKER_SECRETS_DIR/speech-to-phrase-command.sh:/run-secure.sh:ro # holds --hass-token, keeps it out of git
+    networks:
+      traefik-proxy:
+        ipv4_address: 172.18.0.101 # fixed ip to be easily targeted | Maybe is unecessary, review later
+    # Only HA will directly access
+    # ports:
+    #   - 10300:10300
+    entrypoint: ["bash", "/run-secure.sh"]

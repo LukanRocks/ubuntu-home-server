@@ -1,0 +1,24 @@
+# Whisper (faster-whisper) — speech-to-text via Wyoming for Home Assistant
+
+services:
+  whisper:
+    container_name: whisper
+    image: rhasspy/wyoming-whisper
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=$TZ
+    volumes:
+      - $DOCKER_DATA_DIR/whisper:/data   # downloaded models
+    networks:
+      traefik-proxy:
+        ipv4_address: 172.18.0.103 # fixed ip to be easily targeted | Maybe is unecessary, review later
+    # Only HA will directly access
+    # ports:
+    #   - 10300:10300
+    command:
+      - --model
+      - small-int8
+      - --language
+      - en
