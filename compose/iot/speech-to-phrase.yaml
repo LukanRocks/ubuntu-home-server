@@ -10,8 +10,6 @@ services:
         condition: service_healthy
     security_opt:
       - no-new-privileges:true
-    env_file: # Passowrd and Secrets only file
-      - $DOCKER_SECRETS_DIR/speech-to-phrase
     environment:
       - TZ=$TZ
     volumes:
@@ -24,4 +22,11 @@ services:
     # Only HA will directly access
     # ports:
     #   - 10300:10300
+    # TODO: verify bash is available in this image, then enable (Wyoming is TCP-only, no HTTP)
+    # healthcheck:
+    #   test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/10300'"]
+    #   interval: 30s
+    #   timeout: 5s
+    #   start_period: 30s
+    #   retries: 3
     entrypoint: ["bash", "/run-secure.sh"]

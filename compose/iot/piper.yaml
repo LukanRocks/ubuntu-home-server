@@ -17,6 +17,13 @@ services:
     # Only HA will directly access
     # ports:
     #   - 10200:10200
+    # TODO: verify bash is available in this image, then enable (Wyoming is TCP-only, no HTTP)
+    # healthcheck:
+    #   test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/10200'"]
+    #   interval: 30s
+    #   timeout: 5s
+    #   start_period: 30s
+    #   retries: 3
     command:
       - --voice
       - en_US-lessac-medium

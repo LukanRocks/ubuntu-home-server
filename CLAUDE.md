@@ -37,17 +37,20 @@ services:
       - $DOCKER_DATA_DIR/service-name:/data:rw
     networks:
       - traefik-proxy
+    healthcheck:
+      test: ['...']
     labels:
       - traefik.enable=true
       - traefik.http.routers.service-name-router.rule=Host(`service-name.homeserver.lukan.rocks`)
       - traefik.http.routers.service-name-router.entrypoints=web,websecure
       - traefik.http.routers.service-name-router.tls=true
       - traefik.http.routers.service-name-router.tls.certresolver=letsencrypt
-    # anything else (command, network_mode, extra labels, etc.)
-    # goes after labels
+      - traefik.http.routers.service-name-router.service=service-name-services
+      - traefik.http.services.nf-price-tracker-services.loadbalancer.server.port=....
+    # anything else (command, extra labels, etc.) goes after labels
 ```
 
-Key order within a service is fixed: `container_name`, `image`, `restart`, `depends_on`, `privileged`, `network_mode`, `security_opt`, `env_file`, `environment`, `volumes`, `networks`, `labels`, then anything else the service needs. `privileged` and `network_mode` are only present when the container genuinely requires them and replace `networks` when used — a service doesn't declare both.
+Key order within a service is fixed: `container_name`, `image`, `restart`, `depends_on`, `privileged`, `network_mode`, `security_opt`, `env_file`, `environment`, `volumes`, `networks`, `healthcheck`, `labels`, then anything else the service needs. `privileged` and `network_mode` are only present when the container genuinely requires them and replace `networks` when used — a service doesn't declare both.
 
 Defaults — deviate only when the container genuinely requires it or otherwise specified:
 - `restart: unless-stopped`

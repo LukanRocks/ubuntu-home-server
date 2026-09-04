@@ -8,17 +8,17 @@ services:
     network_mode: host # required: AirPrint discovery needs multicast/mDNS on the LAN
     security_opt:
       - no-new-privileges:true
+    env_file: # Password and Secrets only file
+      - $DOCKER_SECRETS_DIR/cups_secrets
+    environment:
+      - TZ=$TZ
     volumes:
       - $DOCKER_DATA_DIR/cups:/config
-    env_file: # Passowrd and Secrets only file
-      - $DOCKER_SECRETS_DIR/cups
-    environment:
-      TZ: $TZ
-    # labels:
-    #   - traefik.enable=true
-    #   - traefik.http.routers.cups-router.rule=Host(`cups.homeserver.lukan.rocks`)
-    #   - traefik.http.routers.cups-router.entrypoints=web,websecure
-    #   - traefik.http.routers.cups-router.tls=true
-    #   - traefik.http.routers.cups-router.tls.certresolver=letsencrypt
-    #   - traefik.http.routers.cups-router.service=cups-services
-    #   - traefik.http.services.cups-services.loadbalancer.server.port=631
+    # TODO: verify curl is available in this image, then enable
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:631/"]
+    #   interval: 30s
+    #   timeout: 5s
+    #   start_period: 15s
+    #   retries: 3
+    # Not Traefik-routed: network_mode: host, accessed directly on the LAN at :631

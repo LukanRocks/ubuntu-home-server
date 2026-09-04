@@ -9,19 +9,20 @@ services:
       - homeassistant
     privileged: true
     network_mode: host
-    security_opt: apparmor:unconfined
+    security_opt:
+      - apparmor:unconfined
     environment:
       - TZ=$TZ
     volumes:
       - $DOCKER_DATA_DIR/music-assistant-server:/data/:rw
-    # labels:
-      # - traefik.enable=true
-      # - traefik.http.routers.musicassistant-router.rule=Host(`ma.homeserver.lukan.rocks`)
-      # - traefik.http.routers.musicassistant-router.entrypoints=web,websecure
-      # - traefik.http.routers.musicassistant-router.tls=true
-      # - traefik.http.routers.musicassistant-router.tls.certresolver=letsencrypt
-      # - traefik.http.routers.musicassistant-router.service=musicassistant-services
-      # - traefik.http.services.musicassistant-services.loadbalancer.server.port=8123
+    # TODO: verify wget is available in this image and confirm the UI port, then enable
+    # healthcheck:
+    #   test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8095/"]
+    #   interval: 30s
+    #   timeout: 5s
+    #   start_period: 30s
+    #   retries: 3
+    # Not Traefik-routed: network_mode: host, accessed directly on the LAN
     cap_add:
       - SYS_ADMIN
       - DAC_READ_SEARCH

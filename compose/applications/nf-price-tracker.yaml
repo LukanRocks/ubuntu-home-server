@@ -9,14 +9,6 @@ services:
       - $DOCKER_DATA_DIR/nf-price-tracker:/app/data:rw
     networks:
       - traefik-proxy
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.nf-price-tracker-router.rule=Host(`nf.homeserver.lukan.rocks`)
-      - traefik.http.routers.nf-price-tracker-router.entrypoints=web,websecure
-      - traefik.http.routers.nf-price-tracker-router.tls=true
-      - traefik.http.routers.nf-price-tracker-router.tls.certresolver=letsencrypt
-      - traefik.http.routers.nf-price-tracker-router.service=nf-price-tracker-services
-      - traefik.http.services.nf-price-tracker-services.loadbalancer.server.port=3000
     # environment:
       # Optional: shows the "Exemplo" button with this QR URL prefilled.
       # A real note identifies a real person, so keep it in .env, not here.
@@ -33,3 +25,11 @@ services:
       timeout: 5s
       start_period: 15s
       retries: 3
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nf-price-tracker-router.rule=Host(`nf.homeserver.lukan.rocks`)
+      - traefik.http.routers.nf-price-tracker-router.entrypoints=web,websecure
+      - traefik.http.routers.nf-price-tracker-router.tls=true
+      - traefik.http.routers.nf-price-tracker-router.tls.certresolver=letsencrypt
+      - traefik.http.routers.nf-price-tracker-router.service=nf-price-tracker-services
+      - traefik.http.services.nf-price-tracker-services.loadbalancer.server.port=3000
